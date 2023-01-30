@@ -48,5 +48,6 @@ class Ait:
                 self.obs = ait['obs']
                 self.talao = ait['talao']
                 self.valor = ait['valor']
-
-
+                return self
+            else:
+                return False
