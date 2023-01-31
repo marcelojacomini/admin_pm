@@ -1,6 +1,7 @@
 # CLASSE INFRAÇÕES DE TRÂNSITO (DESCRIÇÃO ARTIGO VALOR COMPENTENCIA)
 from data_base.data_base import Con
 
+
 class Infra:
     def __init__(self):
         self.id_infra = None

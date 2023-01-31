@@ -7,6 +7,9 @@ from screen_cliente.clientes_eap_geral import *
 
 from screen_banco_horas.banco_horas_geral import *
 
+from screen_transito.transito_cadastro import *
+
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -43,6 +46,10 @@ class App(tk.Tk):
         self.bt_bco_horas = ttk.Button(self.options, text="BANCO DE HORAS",
                                        width=40, style='dark', command=BancoHorasGeral)
         self.bt_bco_horas.grid(row=4, column=0, sticky='w')
+
+        self.bt_cad_ait = ttk.Button(self.options, text="CADASTRAR AIT",
+                                     width=40, style='dark', command=TransitoCadastro)
+        self.bt_cad_ait.grid(row=0, column=1, sticky='w', padx=20, pady=25)
 
 
 ##############################################

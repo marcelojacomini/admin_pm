@@ -176,5 +176,10 @@ class Con:
                             "saldo INT);"
             c.execute(tabela_tsaldo)
 
+            tabela_logradouro = "CREATE TABLE IF NOT EXISTS tr_logradouros " \
+                                "(id_logradouro INT AUTO_INCREMENT PRIMARY KEY, " \
+                                "logradouro VARCHAR(255));"
+            c.execute(tabela_logradouro)
+
 
 Con().create_database()
