@@ -29,7 +29,7 @@ def retorna_logradouro(parametro):
     with cnx.cursor() as c:
         try:
             c.execute(f"SELECT logradouro FROM tr_logradouros WHERE "
-                      f"logradouro LIKE '%{parametro}%' ORDER BY logradouro")
+                      f"logradouro LIKE '{parametro}%' ORDER BY logradouro")
             lista = c.fetchall()
             if len(lista) == 1:
                 return lista[0]['logradouro']
@@ -41,7 +41,12 @@ def retorna_logradouro(parametro):
             pass
 
 
-def preenche_logradouro(campo, logradouro):
+def autocomplete_logradouro(campo, logradouro):
+    f = len(logradouro)
+    print(f, logradouro)
     logr = retorna_logradouro(logradouro)
-    campo.delete(0, 'end')
-    campo.insert(0, logr)
+    posicao = len(logr) - f
+    if len(logr) > f:
+        campo.delete(0, 'end')
+        campo.insert(0, logr)
+        campo.index(posicao)
