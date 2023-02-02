@@ -79,7 +79,7 @@ def data_mask(campo, texto):
 
 def hora_mask(campo, texto):
     if len(texto) == 2:
-        campo.entry.insert("end", ":")
+        campo.insert("end", ":")
 
 
 def codigo_mask(campo, texto):
