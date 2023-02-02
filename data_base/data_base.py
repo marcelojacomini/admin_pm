@@ -176,6 +176,35 @@ class Con:
                             "saldo INT);"
             c.execute(tabela_tsaldo)
 
+            tabela_ait = "CREATE TABLE IF NOT EXISTS tr_ait (id_ait INT AUTO_INCREMENT PRIMARY KEY, " \
+                         "numero VARCHAR(255)," \
+                         "placa VARCHAR(255)," \
+                         "condutor VARCHAR(255)," \
+                         "local VARCHAR(255)," \
+                         "dia DATE," \
+                         "hora VARCHAR(10)," \
+                         "re VARCHAR(10)," \
+                         "codigo INT," \
+                         "competencia VARCHAR(255)," \
+                         "artigo VARCHAR(255)," \
+                         "crr VARCHAR(255)," \
+                         "remocao VARCHAR(255)," \
+                         "cnh VARCHAR(255)," \
+                         "alcoolemia VARCHAR(255)," \
+                         "obs VARCHAR(255)," \
+                         "talao VARCHAR(255)," \
+                         "valor FLOAT);"
+            c.execute(tabela_ait)
+            # CRIA TABELA INFRA
+            tabela_inf = "CREATE TABLE IF NOT EXISTS tr_infra (id_infra INT AUTO_INCREMENT PRIMARY KEY, " \
+                         "codigo INT," \
+                         "artigo VARCHAR(255)," \
+                         "competencia VARCHAR(255)," \
+                         "valor FLOAT," \
+                         "gravidade VARCHAR(255)," \
+                         "fator INT);"
+            c.execute(tabela_inf)
+
             tabela_logradouro = "CREATE TABLE IF NOT EXISTS tr_logradouros " \
                                 "(id_logradouro INT AUTO_INCREMENT PRIMARY KEY, " \
                                 "logradouro VARCHAR(255));"

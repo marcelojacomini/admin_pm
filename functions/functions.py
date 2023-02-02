@@ -82,12 +82,6 @@ def hora_mask(campo, texto):
         campo.insert("end", ":")
 
 
-def codigo_mask(campo, texto):
-    if len(texto) >= 6:
-        campo.delete(5, "end")
-    elif not is_number(texto):
-        campo.delete((len(texto) - 1), 'end')
-
 def format_cpf(campo, texto):
     if len(texto) == 11:
         campo['foreground'] = 'white'

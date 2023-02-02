@@ -30,18 +30,3 @@ class Infra:
                 return self
             else:
                 return False
-
-
-# EXIBE A COMPETÊNCIA E ARTIGO NO CADASTRO DE AUTOS DE INFRAÇÃO
-def verifica_enquadramento(campo, codigo, competencia, artigo):
-    cnx = Con().con()
-    with cnx.cursor() as c:
-        c.execute(f"SELECT * FROM tr_infra WHERE codigo = {codigo}")
-        retorno = c.fetchone()
-        if retorno:
-            infracao = Infra().set_infra(retorno['codigo'])
-            competencia['text'] = infracao.competencia
-            artigo['text'] = infracao.artigo
-        else:
-            campo.focus()
-            campo['style'] = 'danger'

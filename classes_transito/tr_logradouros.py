@@ -41,12 +41,4 @@ def retorna_logradouro(parametro):
             pass
 
 
-def autocomplete_logradouro(campo, logradouro):
-    f = len(logradouro)
-    print(f, logradouro)
-    logr = retorna_logradouro(logradouro)
-    posicao = len(logr) - f
-    if len(logr) > f:
-        campo.delete(0, 'end')
-        campo.insert(0, logr)
-        campo.index(posicao)
+
