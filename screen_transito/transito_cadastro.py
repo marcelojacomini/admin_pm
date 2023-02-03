@@ -227,6 +227,7 @@ class TransitoCadastro(tk.Toplevel):
                 self.lb_msg['text'] = "AIT já cadastrado!!!"
                 self.lb_msg['foreground'] = 'red'
                 self.ait.focus()
+                print(ait.numero)
             else:
                 self.lb_msg['text'] = ""
 

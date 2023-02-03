@@ -1,4 +1,5 @@
 from data_base.data_base import Con
+from datetime import datetime
 
 
 class Ait:
@@ -26,7 +27,6 @@ class Ait:
         cnx = Con().con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM tr_ait WHERE "
-                      f"(id_ait = {parametro}) OR "
                       f"(numero = '{parametro}')")
             ait = c.fetchone()
             if ait:
@@ -81,3 +81,45 @@ def insert_ait(a):
             return True
     except:
         return False
+
+
+def lista_ait_padrao():
+    hoje = datetime.now()
+    dia = hoje.day
+    mes = hoje.month
+    ano = hoje.year
+    de = f"{ano}-{mes}-01"
+    ate = f"{ano}-{mes}-{dia}"
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        c.execute(f"SELECT * FROM tr_ait WHERE (dia >= '{de}') AND (dia <= '{ate}') ORDER BY dia DESC")
+        return c.fetchall()
+
+
+def lista_ait_fitros(seletor, dia_de, dia_ate):
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        if seletor == "Todos":
+            c.execute(f"SELECT * FROM tr_ait WHERE (dia >= '{dia_de}') AND (dia <= '{dia_ate}') ORDER BY dia DESC")
+            return c.fetchall()
+        else:
+            c.execute(f"SELECT * FROM tr_ait WHERE "
+                      f"(talao = '{seletor}') AND "
+                      f"(dia >= '{dia_de}') AND "
+                      f"(dia <= '{dia_ate}') "
+                      f"ORDER BY dia DESC")
+            return c.fetchall()
+
+
+def lista_ait_texto(texto):
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        c.execute(f"SELECT * FROM tr_ait WHERE "
+                  f"(numero LIKE '{texto}%') OR "
+                  f"(placa LIKE '{texto}%') OR "
+                  f"(condutor LIKE '{texto}%') OR "
+                  f"(local LIKE '{texto}%') OR "
+                  f"(re LIKE '{texto}%') OR "
+                  f"(codigo LIKE '{texto}%') "
+                  f"ORDER BY dia DESC")
+        return c.fetchall()

@@ -8,6 +8,7 @@ from screen_cliente.clientes_eap_geral import *
 from screen_banco_horas.banco_horas_geral import *
 
 from screen_transito.transito_cadastro import *
+from screen_transito.transito_consulta import *
 
 
 class App(tk.Tk):
@@ -20,36 +21,43 @@ class App(tk.Tk):
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
         self.st = ttkbootstrap.Style()
-        self.st.theme_use("new_silver")
+        self.st.theme_use("admin_brown")
 
         ######################################################################################################
         # menu
         ######################################################################################################
-        self.options = ttk.Frame(self)
-        self.options.pack(fill='x', pady=25, padx=10)
+        frame_efetivo = ttk.Frame(self, borderwidth=2, relief='solid')
+        frame_efetivo.place(relx=0.05, rely=0.05, relwidth=0.30, relheight=0.85)
 
-        self.bt_cliente = ttk.Button(self.options, text="GERENCIAR EFETIVO", width=40, command=ClienteGeral)
-        self.bt_cliente.grid(row=0, column=0, sticky='w', pady=15)
+        self.bt_cliente = ttk.Button(frame_efetivo, text="EFETIVO - GERENCIAMENTO GERAL", width=40,
+                                     command=ClienteGeral)
+        self.bt_cliente.pack(fill='x', pady=5, padx=2)
 
-        self.bt_cliente_contatos = ttk.Button(self.options, text="EFETIVO CONTATOS",
-                                              width=40, command=ClientesContatosGeral)
-        self.bt_cliente_contatos.grid(row=1, column=0, sticky='w', pady=15)
+        self.bt_cliente_contatos = ttk.Button(frame_efetivo, text="EFETIVO - CONTATOS", style="secondary",
+                                              command=ClientesContatosGeral)
+        self.bt_cliente_contatos.pack(fill='x', pady=5, padx=2)
 
-        self.bt_cliente_cnh = ttk.Button(self.options, text="DADOS CNH",
-                                         width=40, command=ClientesCnhGeral)
-        self.bt_cliente_cnh.grid(row=2, column=0, sticky='w')
+        self.bt_cliente_cnh = ttk.Button(frame_efetivo, text="EFETIVO - DADOS DE CNH", command=ClientesCnhGeral)
+        self.bt_cliente_cnh.pack(fill='x', pady=5, padx=2)
 
-        self.bt_cliente_eap = ttk.Button(self.options, text="DADOS EAP",
-                                         width=40, style='info', command=ClientesEapGeral)
-        self.bt_cliente_eap.grid(row=3, column=0, sticky='w', pady=15)
+        self.bt_cliente_eap = ttk.Button(frame_efetivo, text="EFETIVO - CONTROLE DE EAP", style='info',
+                                         command=ClientesEapGeral)
+        self.bt_cliente_eap.pack(fill='x', pady=5, padx=2)
 
-        self.bt_bco_horas = ttk.Button(self.options, text="BANCO DE HORAS",
+        self.bt_bco_horas = ttk.Button(frame_efetivo, text="EFETIVO - BANCO DE HORAS",
                                        width=40, style='dark', command=BancoHorasGeral)
-        self.bt_bco_horas.grid(row=4, column=0, sticky='w')
+        self.bt_bco_horas.pack(fill='x', pady=5, padx=2)
 
-        self.bt_cad_ait = ttk.Button(self.options, text="CADASTRAR AIT",
-                                     width=40, style='dark', command=TransitoCadastro)
-        self.bt_cad_ait.grid(row=0, column=1, sticky='w', padx=20, pady=25)
+        frame_transito = ttk.Frame(self, borderwidth=2, relief='solid')
+        frame_transito.place(relx=0.40, rely=0.05, relwidth=0.30, relheight=0.85)
+
+        self.bt_cad_ait = ttk.Button(frame_transito, text="TRÂNSITO - CADASTRAR AIT", style='info',
+                                     command=TransitoCadastro)
+        self.bt_cad_ait.pack(fill='x', pady=5, padx=2)
+
+        self.bt_consluta_ait = ttk.Button(frame_transito, text="TRÂNSITO - CONSULTAS", style='info',
+                                          command=TransitoConsulta)
+        self.bt_consluta_ait.pack(fill='x', pady=5, padx=2)
 
 
 ##############################################

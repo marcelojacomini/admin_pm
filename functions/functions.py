@@ -90,6 +90,10 @@ def format_cpf(campo, texto):
         campo.insert(11, '-')
 
 
+def formatar_moeda(valor):
+    valor = (f"{valor:_.2f}").replace('.', ',').replace('_', '.')
+    return valor
+
 ###########################################################################################
 # FUNÇÕES PARA ENTRADA DE CONTATOS
 ###########################################################################################
