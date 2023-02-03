@@ -28,6 +28,7 @@ class TransitoCadastro(tk.Toplevel):
         self.talao_select = tk.StringVar(self, "Municipio")
         self.dados_form = []
         self.valor = None
+        self.repetir = ttk.BooleanVar()
 
         ##############################################################################################################
         # FORMULÁRIO DE CADASTRO DE AIT
@@ -145,7 +146,8 @@ class TransitoCadastro(tk.Toplevel):
         bt_salvar = ttk.Button(linha7, text="SALVAR", width=40, style='success', command=self.salvar)
         bt_salvar.grid(row=0, column=0)
 
-        self.repete = ttk.Checkbutton(linha7, text="Marque para repetir o veículo!", style="success-round-toggle")
+        self.repete = ttk.Checkbutton(linha7, text="Marque para repetir o veículo!", style="success-round-toggle",
+                                      variable=self.repetir)
         self.repete.grid(row=0, column=1, padx=50)
 
         ##############################################################################################################
@@ -166,14 +168,25 @@ class TransitoCadastro(tk.Toplevel):
         self.data.entry.bind('<KeyRelease>', lambda event: data_mask(self.data, self.data.entry.get()))
         self.hora.bind('<KeyRelease>', lambda event: hora_mask(self.hora, self.hora.get()))
         self.codigo.bind('<KeyRelease>', lambda event: self.verifica_enquadramento(self.codigo, self.codigo.get()))
-        self.repete.bind('<Button-1>', lambda event: print(self.repete.getvar()))
 
     ##############################################################################################################
     # FUNÇÕES DA PÁGINA
     ##############################################################################################################
     def salvar(self):
         dados_form = self.coleta_formulario()
-        print(dados_form)
+        if insert_ait(dados_form):
+            self.lb_msg['text'] = f"{self.ait.get()} Salvo!!!"
+            self.lb_msg['foreground'] = "black"
+            self.lb_msg['font'] = ('', 10, 'bold')
+        else:
+            self.lb_msg['text'] = "Houve um erro ao salvar"
+            self.lb_msg['foreground'] = "red"
+            self.lb_msg['font'] = ('', 10, 'bold')
+        novo_logradouro(self.local.get())
+        if self.repetir.get():
+            self.repete_veiculo()
+        else:
+            self.limpa_form()
 
     def coleta_formulario(self):
         self.dados_form = [
@@ -195,7 +208,6 @@ class TransitoCadastro(tk.Toplevel):
             self.talao_select.get(),
             self.valor
         ]
-        print(self.dados_form)
         if self.dados_form[0] == "" or self.dados_form[1] == "" or self.dados_form[3] == "" \
            or self.dados_form[4] == "" or self.dados_form[5] == "" or self.dados_form[6] == "" \
            or self.dados_form[7] == "" or self.dados_form[8] == "":
@@ -209,7 +221,6 @@ class TransitoCadastro(tk.Toplevel):
         if numero_ait == "":
             pass
         else:
-            print('verificando ait....')
             ait = Ait()
             ait.set_ait(numero_ait)
             if ait.numero:
@@ -250,3 +261,32 @@ class TransitoCadastro(tk.Toplevel):
             self.local.delete(0, 'end')
             self.local.insert(0, logr.upper())
             self.local.select_range(len_f, len(logr))
+
+    def repete_veiculo(self):
+        self.ait.delete(0, 'end')
+        self.codigo.delete(0, 'end')
+        self.competencia['text'] = ""
+        self.artigo['text'] = ""
+        self.crr.delete(0, 'end')
+        self.recolha.set("NÃO")
+        self.cnh.delete(0, 'end')
+        self.alcoolemia.delete(0, 'end')
+        self.obs.delete(0, 'end')
+        self.ait.focus()
+
+    def limpa_form(self):
+        self.ait.delete(0, 'end')
+        self.placa.delete(0, 'end')
+        self.condutor.delete(0, 'end')
+        self.local.delete(0, 'end')
+        self.hora.delete(0, 'end')
+        self.re.delete(0, 'end')
+        self.codigo.delete(0, 'end')
+        self.competencia['text'] = ""
+        self.artigo['text'] = ""
+        self.crr.delete(0, 'end')
+        self.recolha.set("NÃO")
+        self.cnh.delete(0, 'end')
+        self.alcoolemia.delete(0, 'end')
+        self.obs.delete(0, 'end')
+        self.ait.focus()

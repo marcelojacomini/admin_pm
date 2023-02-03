@@ -55,25 +55,29 @@ class Ait:
 
 def insert_ait(a):
     cnx = Con().con()
-    with cnx.cursor() as c:
-        c.execute(f"INSERT INTO tr_ait (numero, placa, condutor, local, dia, hora, re, codigo, competencia, artigo, "
-                  f"crr, remocao, cnh, alcoolemia, obs, talao, valor) VALUES ("
-                  f"'{a[0]}' ,"
-                  f"'{a[1]}' ,"
-                  f"'{a[2]}' ,"
-                  f"'{a[3]}' ,"
-                  f"'{a[4]}' ,"
-                  f"'{a[5]}' ,"
-                  f"'{a[6]}' ,"
-                  f"{a[7]} ,"
-                  f"'{a[8]}' ,"
-                  f"'{a[9]}' ,"
-                  f"'{a[0]}' ,"
-                  f"'{a[11]}' ,"
-                  f"'{a[12]}' ,"
-                  f"'{a[13]}' ,"
-                  f"'{a[14]}' ,"
-                  f"'{a[15]}' ,"
-                  f"{a[16]}"
-                  f")")
-        cnx.commit()
+    try:
+        with cnx.cursor() as c:
+            c.execute(f"INSERT INTO tr_ait (numero, placa, condutor, local, dia, hora, re, codigo, competencia, artigo, "
+                      f"crr, remocao, cnh, alcoolemia, obs, talao, valor) VALUES ("
+                      f"'{a[0]}' ,"
+                      f"'{a[1]}' ,"
+                      f"'{a[2]}' ,"
+                      f"'{a[3]}' ,"
+                      f"'{a[4]}' ,"
+                      f"'{a[5]}' ,"
+                      f"'{a[6]}' ,"
+                      f"{a[7]} ,"
+                      f"'{a[8]}' ,"
+                      f"'{a[9]}' ,"
+                      f"'{a[0]}' ,"
+                      f"'{a[11]}' ,"
+                      f"'{a[12]}' ,"
+                      f"'{a[13]}' ,"
+                      f"'{a[14]}' ,"
+                      f"'{a[15]}' ,"
+                      f"{a[16]}"
+                      f")")
+            cnx.commit()
+            return True
+    except:
+        return False

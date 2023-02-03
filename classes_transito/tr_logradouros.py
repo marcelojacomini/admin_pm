@@ -9,8 +9,17 @@ class Logradouros:
     def insert_logradouro(self):
         cnx = Con().con()
         with cnx.cursor() as c:
-            c.execute(f"INSERT INTO tr_logradouros (logradouro) VALUES ('{self.logradouro}')")
-            cnx.commit()
+            try:
+                c.execute(f"SELECT logradouro FROM tr_logradouros WHERE "
+                          f"logradouro LIKE '{self.logradouro}%'")
+                retorno = c.fetchone()
+                if retorno:
+                    pass
+                else:
+                    c.execute(f"INSERT INTO tr_logradouros (logradouro) VALUES ('{self.logradouro}')")
+                    cnx.commit()
+            except:
+                pass
 
 
 def lista_logradouros():
@@ -41,4 +50,8 @@ def retorna_logradouro(parametro):
             pass
 
 
-
+# alimentar o autocomplete
+def novo_logradouro(local):
+    novo_local = Logradouros()
+    novo_local.logradouro = local
+    novo_local.insert_logradouro()
