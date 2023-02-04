@@ -4,6 +4,7 @@ from screen_cliente.clientegeral import ClienteGeral
 from screen_cliente.clientes_contatos_geral import *
 from screen_cliente.clientes_cnh_geral import *
 from screen_cliente.clientes_eap_geral import *
+from screen_cliente.cliente_talao import *
 
 from screen_banco_horas.banco_horas_geral import *
 

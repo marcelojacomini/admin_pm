@@ -39,6 +39,7 @@ class ClientesEapGeral(tk.Toplevel):
         self.lb_periodo = ttk.Label(self.form, text="Período EAD")
         self.lb_periodo.grid(row=0, column=1, sticky='w')
         self.periodo = ttk.Combobox(self.form, values=list_periodo_ead)
+        self.periodo.set('Não Informado')
         self.periodo.grid(row=1, column=1)
         self.lb_data_eap = ttk.Label(self.form, text='Data do EAP')
         self.lb_data_eap.grid(row=0, column=2, sticky='w', padx=5)

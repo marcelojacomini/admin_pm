@@ -4,7 +4,7 @@ from screen_cliente.clientecontato import *
 from screen_cliente.cliente_dados_pessoais import *
 from screen_cliente.cliente_epi import *
 from screen_cliente.cliente_info import *
-
+from screen_cliente.cliente_talao import *
 
 class ClienteGeral(tk.Toplevel):
     def __init__(self):
@@ -13,7 +13,7 @@ class ClienteGeral(tk.Toplevel):
         geo = tk_center(self, 800, 700)
         self.geometry(geo)
         self.title("ADMIN - POLÍCIA MILITAR")
-        # self.iconbitmap("ico.ico")
+        self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
         self.focus_set()
         self.grab_set()
@@ -60,8 +60,7 @@ class ClienteGeral(tk.Toplevel):
         # BOTÃO NOVO REGISTRO DE CLIENTE (DADOS FUNCIONAIS)
         self.bt_novo = ttk.Button(self.menu, text='CADASTRAR NOVO', width=60, command=ClienteNovo, style='success')
         self.bt_novo.pack(pady=3)
-        self.divide = ttk.Label(self.menu, text=' ',
-                                width=60, style='darl-inverse')
+        self.divide = ttk.Label(self.menu, text=' ', width=60, style='darl-inverse')
         self.divide.pack(pady=15)
 
         # BOTÃO EDITAR DADOS FUNCIONAIS
@@ -81,9 +80,11 @@ class ClienteGeral(tk.Toplevel):
                                  command=ClienteEpi, state='disabled', style='primary')
         self.bt_epi.pack(pady=3)
         self.bt_info = ttk.Button(self.menu, text='INFORMAÇÕES GERAIS', width=60,
-                                  command=ClienteInfo, state='disabled',
-                                  style='primary')
+                                  command=ClienteInfo, state='disabled', style='primary')
         self.bt_info.pack(pady=3)
+        self.bt_talonario = ttk.Button(self.menu, text="TALONÁRIO AIT'S", width=60,
+                                       command=ClienteTalao, state='disabled', style='primary')
+        self.bt_talonario.pack(pady=3)
 
     # FUNÇÃO PARA ATUALIZAÇÃO DA LISTA DE CLIENTES ( * COM ERRO QUE NÃO INFLUENCIA )
     def atualiza_t_cliente(self):
@@ -106,5 +107,6 @@ class ClienteGeral(tk.Toplevel):
             self.bt_endereco['state'] = 'normal'
             self.bt_epi['state'] = 'normal'
             self.bt_info['state'] = 'normal'
+            self.bt_talonario['state'] = 'normal'
         except IndexError:
             print('')

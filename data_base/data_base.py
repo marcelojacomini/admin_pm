@@ -210,5 +210,14 @@ class Con:
                                 "logradouro VARCHAR(255));"
             c.execute(tabela_logradouro)
 
+            tabela_talonario = "CREATE TABLE IF NOT EXISTS tr_talao " \
+                               "(id_talao INT AUTO_INCREMENT PRIMARY KEY, " \
+                               "re VARCHAR(6), " \
+                               "mi VARCHAR(15), " \
+                               "mf VARCHAR(15), " \
+                               "ei VARCHAR(15), " \
+                               "ef VARCHAR(15));"
+            c.execute(tabela_talonario)
+
 
 Con().create_database()
