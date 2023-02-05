@@ -8,6 +8,7 @@ from functions.functions import data_mask, hora_mask, is_number, data_us
 from classes_transito.tr_ait import *
 from classes_transito.tr_logradouros import *
 from classes_transito.tr_infra import *
+from classes_transito.tr_talao import *
 
 
 class TransitoCadastro(tk.Toplevel):
@@ -29,6 +30,7 @@ class TransitoCadastro(tk.Toplevel):
         self.dados_form = []
         self.valor = None
         self.repetir = ttk.BooleanVar()
+        self.taloes = lista_talonario_geral()
 
         ##############################################################################################################
         # FORMULÁRIO DE CADASTRO DE AIT
@@ -227,9 +229,15 @@ class TransitoCadastro(tk.Toplevel):
                 self.lb_msg['text'] = "AIT já cadastrado!!!"
                 self.lb_msg['foreground'] = 'red'
                 self.ait.focus()
-                print(ait.numero)
             else:
                 self.lb_msg['text'] = ""
+                # preenche o re pela lista de talões
+                for num_aits in self.taloes:
+                    if num_aits[1]:
+                        if int(numero_ait) in num_aits[1]:
+                            self.re.delete(0, 'end')
+                            self.re.insert(0, num_aits[0])
+                            self.re['state'] = 'disabled'
 
     def verifica_enquadramento(self, campo, codigo_enq):
         if len(codigo_enq) >= 6:

@@ -1,5 +1,7 @@
 from data_base.data_base import Con
 
+from classes.cl_cliente import *
+
 
 class Talao:
     def __init__(self):
@@ -70,4 +72,15 @@ def talao_range(re):
             return False
 
 
+def lista_talonario_geral():
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        c.execute("SELECT re FROM clientes WHERE ativo = 'ATIVO' ORDER BY graduacao, promocao, admissao, re")
+        clientes = c.fetchall()
 
+    lista_talonarios = []
+    for cliente in clientes:
+        taloes = Talao().set_talonario(cliente['re'])
+        lista_talonarios.append([taloes.re, talao_range(taloes.re)])
+
+    return lista_talonarios

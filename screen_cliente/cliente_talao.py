@@ -10,7 +10,7 @@ class ClienteTalao(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 450, 350)
+        geo = tk_center(self, 450, 300)
         self.geometry(geo)
         self.title("ADMIN - TALONÁRIO DE INFRAÇÕES")
         self.iconbitmap("img/pm_ico.ico")
