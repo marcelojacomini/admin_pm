@@ -52,6 +52,34 @@ class Ait:
             else:
                 return False
 
+    def update_ait(self):
+        cnx = Con().con()
+        try:
+            with cnx.cursor() as c:
+                c.execute(
+                    f"UPDATE tr_ait SET ("
+                    f"numero = {self.numero}, "
+                    f"placa = {self.placa}, "
+                    f"condutor = {self.condutor}, "
+                    f"local = {self.local}, "
+                    f"dia = {self.dia}, "
+                    f"hora = {self.hora}, "
+                    f"re = {self.re}, "
+                    f"codigo = {self.codigo}, "
+                    f"competencia = {self.competencia}, "
+                    f"artigo = {self.artigo}, "
+                    f"crr = {self.crr}, "
+                    f"remocao = {self.remocao}, "
+                    f"cnh = {self.cnh}, "
+                    f"alcoolemia = {self.alcoolemia}, "
+                    f"obs = {self.obs}, "
+                    f"talao = {self.talao}, "
+                    f"valor = {self.valor} WHERE id_ait = {self.id_ait})")
+                cnx.commit()
+                return True
+        except:
+            return False
+
 
 def insert_ait(a):
     cnx = Con().con()
@@ -69,7 +97,7 @@ def insert_ait(a):
                       f"{a[7]} ,"
                       f"'{a[8]}' ,"
                       f"'{a[9]}' ,"
-                      f"'{a[0]}' ,"
+                      f"'{a[10]}' ,"
                       f"'{a[11]}' ,"
                       f"'{a[12]}' ,"
                       f"'{a[13]}' ,"

@@ -3,21 +3,21 @@ import ttkbootstrap as ttk
 from ttkbootstrap import DateEntry
 
 from functions.tk_center import tk_center
-from functions.functions import data_mask, hora_mask, is_number, data_us
+from functions.functions import data_mask, hora_mask, is_number, data_us, data_pt
 
 from classes_transito.tr_ait import *
 from classes_transito.tr_logradouros import *
 from classes_transito.tr_infra import *
 from classes_transito.tr_talao import *
+from functions.globals import ait_global
 
-
-class TransitoCadastro(tk.Toplevel):
+class TransitoEdicao(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
         geo = tk_center(self, 700, 600)
         self.geometry(geo)
-        self.title("ADMIN Trânsito - NOVO AUTO DE INFRAÇÃO")
+        self.title("ADMIN Trânsito - EDITAR AUTO DE INFRAÇÃO")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
         self.focus_set()
@@ -28,8 +28,6 @@ class TransitoCadastro(tk.Toplevel):
         ##############################################################################################################
         self.talao_select = tk.StringVar(self, "Municipio")
         self.dados_form = []
-        self.valor = None
-        self.repetir = ttk.BooleanVar()
         self.taloes = lista_talonario_geral()
 
         ##############################################################################################################
@@ -46,12 +44,12 @@ class TransitoCadastro(tk.Toplevel):
         lb_talao = ttk.Label(linha1, text="Informe o talão: ", font=('', 10, 'bold'))
         lb_talao.grid(column=0, row=0)
 
-        municipal = ttk.Radiobutton(linha1, text="Municipal   | ", value="Municipio",
-                                    variable=self.talao_select)
-        municipal.grid(row=0, column=1, pady=5, padx=5)
-        estadual = ttk.Radiobutton(linha1, text="Estadual", value="Estado",
-                                   variable=self.talao_select)
-        estadual.grid(row=0, column=2, pady=5, padx=5)
+        self.municipal = ttk.Radiobutton(linha1, text="Municipal   | ", value="Municipio",
+                                         variable=self.talao_select)
+        self.municipal.grid(row=0, column=1, pady=5, padx=5)
+        self.estadual = ttk.Radiobutton(linha1, text="Estadual", value="Estado",
+                                        variable=self.talao_select)
+        self.estadual.grid(row=0, column=2, pady=5, padx=5)
 
         ##############################################################################################################
         linha2 = ttk.Frame(self)
@@ -148,18 +146,11 @@ class TransitoCadastro(tk.Toplevel):
         bt_salvar = ttk.Button(linha7, text="SALVAR", width=40, style='success', command=self.salvar)
         bt_salvar.grid(row=0, column=0)
 
-        self.repete = ttk.Checkbutton(linha7, text="Marque para repetir o veículo!", style="success-round-toggle",
-                                      variable=self.repetir)
-        self.repete.grid(row=0, column=1, padx=50)
-
         ##############################################################################################################
         linha8 = ttk.Frame(self)
         linha8.pack(fill='x', padx=20, pady=35)
         self.lb_msg = ttk.Label(linha8, text='MSG', anchor='center', borderwidth=1, style='warning', relief='solid')
         self.lb_msg.pack(fill='x', ipady=3)
-
-        # finaliza detalhes do carregamento da página
-        self.ait.focus()
 
         ##############################################################################################################
         # BIND
@@ -171,53 +162,51 @@ class TransitoCadastro(tk.Toplevel):
         self.hora.bind('<KeyRelease>', lambda event: hora_mask(self.hora, self.hora.get()))
         self.codigo.bind('<KeyRelease>', lambda event: self.verifica_enquadramento(self.codigo, self.codigo.get()))
 
+        ##############################################################################################################
+        # PREENCHE O FORMULÁRIO
+        ##############################################################################################################
+        self.preenche_form()
+
     ##############################################################################################################
     # FUNÇÕES DA PÁGINA
     ##############################################################################################################
     def salvar(self):
-        dados_form = self.coleta_formulario()
-        if insert_ait(dados_form):
-            self.lb_msg['text'] = f"{self.ait.get()} Salvo!!!"
-            self.lb_msg['foreground'] = "black"
-            self.lb_msg['font'] = ('', 10, 'bold')
-        else:
-            self.lb_msg['text'] = "Houve um erro ao salvar"
-            self.lb_msg['foreground'] = "red"
-            self.lb_msg['font'] = ('', 10, 'bold')
-        novo_logradouro(self.local.get().upper())
-        if self.repetir.get():
-            self.repete_veiculo()
-        else:
-            self.limpa_form()
+        if self.coleta_formulario():
+            if ait_global.update_ait():
+                self.lb_msg['text'] = f"{self.ait.get()} Salvo!!!"
+                self.lb_msg['foreground'] = "black"
+                self.lb_msg['font'] = ('', 10, 'bold')
+            else:
+                self.lb_msg['text'] = "Houve um erro ao salvar"
+                self.lb_msg['foreground'] = "red"
+                self.lb_msg['font'] = ('', 10, 'bold')
+            novo_logradouro(self.local.get().upper())
+
 
     def coleta_formulario(self):
-        self.dados_form = [
-            self.ait.get(),
-            self.placa.get().upper(),
-            self.condutor.get().upper(),
-            self.local.get().upper(),
-            data_us(self.data.entry.get()),
-            self.hora.get(),
-            self.re.get(),
-            self.codigo.get(),
-            self.competencia['text'],
-            self.artigo['text'],
-            self.crr.get().upper(),
-            self.recolha.get().upper(),
-            self.cnh.get().upper(),
-            self.alcoolemia.get().upper(),
-            self.obs.get().upper(),
-            self.talao_select.get(),
-            self.valor
-        ]
-        if self.dados_form[0] == "" or self.dados_form[1] == "" or self.dados_form[3] == "" \
-           or self.dados_form[4] == "" or self.dados_form[5] == "" or self.dados_form[6] == "" \
-           or self.dados_form[7] == "" or self.dados_form[8] == "":
-            self.lb_msg['text'] = "AIT, Placa, Local, Data, Hora, RE e Código não podem ficar vazios!!!"
-            self.lb_msg['foreground'] = 'red'
+        ait_global.numero = self.ait.get()
+        ait_global.placa = self.placa.get().upper()
+        ait_global.condutor = self.condutor.get().upper()
+        ait_global.local = self.local.get().upper()
+        ait_global.dia = data_us(self.data.entry.get())
+        ait_global.hora = self.hora.get()
+        ait_global.re = self.re.get()
+        ait_global.codigo = self.codigo.get()
+        ait_global.competencia = self.competencia['text']
+        ait_global.artigo = self.artigo['text']
+        ait_global.crr = self.crr.get().upper()
+        ait_global.remocao = self.recolha.get().upper()
+        ait_global.cnh = self.cnh.get().upper()
+        ait_global.alcoolemia = self.alcoolemia.get().upper()
+        ait_global.obs = self.obs.get().upper()
+        ait_global.talao = self.talao_select.get()
+
+        if ait_global.numero == "" or ait_global.placa == "" or ait_global.local == "" or\
+           ait_global.dia == "" or ait_global.hora == "" or ait_global.re == "" or\
+           ait_global.codigo == "" or ait_global.competencia == "":
             return False
         else:
-            return self.dados_form
+            return True
 
     def verifica_ait(self, numero_ait):
         if numero_ait == "":
@@ -261,7 +250,7 @@ class TransitoCadastro(tk.Toplevel):
                 self.artigo['font'] = ('', 10, 'bold')
                 self.competencia['background'] = '#F0FFF0'
                 self.artigo['background'] = '#F0FFF0'
-                self.valor = "{:.2f}".format(cod.valor * cod.fator)
+                ait_global.valor = "{:.2f}".format(cod.valor * cod.fator)
             else:
                 self.competencia['text'] = ' Cód. Inválido'
                 self.artigo['text'] = ' Cód. Inválido'
@@ -275,32 +264,21 @@ class TransitoCadastro(tk.Toplevel):
             self.local.insert(0, logr.upper())
             self.local.select_range(len_f, len(logr))
 
-    def repete_veiculo(self):
-        self.ait.delete(0, 'end')
-        self.codigo.delete(0, 'end')
-        self.competencia['text'] = ""
-        self.artigo['text'] = ""
-        self.crr.delete(0, 'end')
-        self.recolha.set("NÃO")
-        self.cnh.delete(0, 'end')
-        self.alcoolemia.delete(0, 'end')
-        self.obs.delete(0, 'end')
-        self.ait.focus()
-
-    def limpa_form(self):
-        self.ait.delete(0, 'end')
-        self.placa.delete(0, 'end')
-        self.condutor.delete(0, 'end')
-        self.local.delete(0, 'end')
-        self.hora.delete(0, 'end')
-        self.re['state'] = 'normal'
-        self.re.delete(0, 'end')
-        self.codigo.delete(0, 'end')
-        self.competencia['text'] = ""
-        self.artigo['text'] = ""
-        self.crr.delete(0, 'end')
-        self.recolha.set("NÃO")
-        self.cnh.delete(0, 'end')
-        self.alcoolemia.delete(0, 'end')
-        self.obs.delete(0, 'end')
-        self.ait.focus()
+    def preenche_form(self):
+        self.talao_select.set(ait_global.talao)
+        self.ait.insert(0, ait_global.numero)
+        self.placa.insert(0, ait_global.placa)
+        self.condutor.insert(0, ait_global.condutor)
+        self.local.insert(0, ait_global.local)
+        self.data.entry.delete(0, 'end')
+        self.data.entry.insert(0, data_pt(ait_global.dia))
+        self.hora.insert(0, ait_global.hora)
+        self.re.insert(0, ait_global.re)
+        self.codigo.insert(0, ait_global.codigo)
+        self.competencia['text'] = ait_global.competencia
+        self.artigo['text'] = ait_global.artigo
+        self.crr.insert(0, ait_global.crr)
+        self.recolha.set(ait_global.remocao)
+        self.cnh.insert(0, ait_global.cnh)
+        self.alcoolemia.insert(0, ait_global.alcoolemia)
+        self.obs.insert(0, ait_global.obs)

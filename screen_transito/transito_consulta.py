@@ -3,8 +3,10 @@ import ttkbootstrap as ttk
 from ttkbootstrap import DateEntry
 from functions.tk_center import tk_center
 from functions.functions import data_pt, data_us, formatar_moeda
+from functions.globals import ait_global
 
 from classes_transito.tr_ait import *
+from screen_transito.transito_edicao import TransitoEdicao
 
 
 class TransitoConsulta(tk.Toplevel):
@@ -22,6 +24,7 @@ class TransitoConsulta(tk.Toplevel):
         #############################################################################################################
         # VARIAVEIS
         self.pesquisa_select = tk.StringVar(self, "Todos")
+        self.ait_select = None
 
         #############################################################################################################
         header = ttk.Frame(self)
@@ -91,9 +94,16 @@ class TransitoConsulta(tk.Toplevel):
                            font=('', 11, 'bold'), foreground='#FF9900')
         lb_obs.grid(row=2, column=0, padx=15, sticky='w')
 
+        ld_divide = ttk.Label(linha3, text='')
+        ld_divide.grid(row=0, column=1, padx=65)
+
+        self.bt_editar = ttk.Button(linha3, text='EDITAR SELECIONADO', state='disabled', command=TransitoEdicao)
+        self.bt_editar.grid(row=0, column=2)
+
         #############################################################################################################
         self.atualiza_t_consulta()
         #############################################################################################################
+        self.t_consulta.bind('<<TreeviewSelect>>', self.habilitar_edicao)
         self.texto.bind('<KeyRelease>', lambda event: self.consulta_texto(self.texto.get()))
 
     #################################################################################################################
@@ -104,7 +114,7 @@ class TransitoConsulta(tk.Toplevel):
         contador = 0
         valor = 0.0
         for i in lista_ait:
-            a = [i['numero'], i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
+            a = [str(i['numero']), i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
                  i['talao'], f"R$ {i['valor']}"]
             self.t_consulta.insert('', tk.END, values=a)
             contador = contador + 1
@@ -125,7 +135,7 @@ class TransitoConsulta(tk.Toplevel):
         contador = 0
         valor = 0.0
         for i in lista_ait:
-            a = [i['numero'], i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
+            a = [str(i['numero']), i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
                  i['talao'], f"R$ {i['valor']}"]
             self.t_consulta.insert('', tk.END, values=a)
             contador = contador + 1
@@ -143,7 +153,7 @@ class TransitoConsulta(tk.Toplevel):
         contador = 0
         valor = 0.0
         for i in lista_ait:
-            a = [i['numero'], i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
+            a = [str(i['numero']), i['placa'], i['condutor'], i['local'], data_pt(i['dia']), i['re'], i['codigo'],
                  i['talao'], f"R$ {i['valor']}"]
             self.t_consulta.insert('', tk.END, values=a)
             contador = contador + 1
@@ -151,3 +161,19 @@ class TransitoConsulta(tk.Toplevel):
         valor = formatar_moeda(valor)
         self.lb_contador['text'] = f"     Total de registros exibidos: {contador}   -   " \
                                    f"Valor total das infrações: R$ {valor}"
+
+    def habilitar_edicao(self, x):
+        print(x)
+        it = self.t_consulta.focus()
+        try:
+            dados = self.t_consulta.item(it).get('values')[0]
+            self.ait_select = Ait()
+            self.ait_select.set_ait(str(dados))
+            if not self.ait_select.id_ait:
+                self.ait_select = Ait()
+                dados = f"0{dados}"
+                self.ait_select.set_ait(dados)
+        except:
+            pass
+        ait_global.set_ait(self.ait_select.numero)
+        self.bt_editar['state'] = 'enabled'

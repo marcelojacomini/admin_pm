@@ -6,6 +6,7 @@ from screen_cliente.cliente_epi import *
 from screen_cliente.cliente_info import *
 from screen_cliente.cliente_talao import *
 
+
 class ClienteGeral(tk.Toplevel):
     def __init__(self):
         super().__init__()
