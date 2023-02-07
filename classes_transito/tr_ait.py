@@ -54,31 +54,31 @@ class Ait:
 
     def update_ait(self):
         cnx = Con().con()
-        try:
-            with cnx.cursor() as c:
-                c.execute(
-                    f"UPDATE tr_ait SET ("
-                    f"numero = {self.numero}, "
-                    f"placa = {self.placa}, "
-                    f"condutor = {self.condutor}, "
-                    f"local = {self.local}, "
-                    f"dia = {self.dia}, "
-                    f"hora = {self.hora}, "
-                    f"re = {self.re}, "
-                    f"codigo = {self.codigo}, "
-                    f"competencia = {self.competencia}, "
-                    f"artigo = {self.artigo}, "
-                    f"crr = {self.crr}, "
-                    f"remocao = {self.remocao}, "
-                    f"cnh = {self.cnh}, "
-                    f"alcoolemia = {self.alcoolemia}, "
-                    f"obs = {self.obs}, "
-                    f"talao = {self.talao}, "
-                    f"valor = {self.valor} WHERE id_ait = {self.id_ait})")
-                cnx.commit()
-                return True
-        except:
-            return False
+        #try:
+        with cnx.cursor() as c:
+            c.execute(
+                f"UPDATE tr_ait SET "
+                f"numero = '{self.numero}', "
+                f"placa = '{self.placa}', "
+                f"condutor = '{self.condutor}', "
+                f"local = '{self.local}', "
+                f"dia = '{self.dia}', "
+                f"hora = '{self.hora}', "
+                f"re = '{self.re}', "
+                f"codigo = {self.codigo}, "
+                f"competencia = '{self.competencia}', "
+                f"artigo = '{self.artigo}', "
+                f"crr = '{self.crr}', "
+                f"remocao = '{self.remocao}', "
+                f"cnh = '{self.cnh}', "
+                f"alcoolemia = '{self.alcoolemia}', "
+                f"obs = '{self.obs}', "
+                f"talao = '{self.talao}', "
+                f"valor = {self.valor} WHERE id_ait = {self.id_ait}")
+            cnx.commit()
+            return True
+        #except:
+        #    return False
 
 
 def insert_ait(a):

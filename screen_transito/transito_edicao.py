@@ -182,7 +182,6 @@ class TransitoEdicao(tk.Toplevel):
                 self.lb_msg['font'] = ('', 10, 'bold')
             novo_logradouro(self.local.get().upper())
 
-
     def coleta_formulario(self):
         ait_global.numero = self.ait.get()
         ait_global.placa = self.placa.get().upper()
