@@ -17,7 +17,10 @@ class Cliente:
     def set_cliente(self, txt):
         cnx = Con().con()
         with cnx.cursor() as c:
-            c.execute(f"SELECT * FROM clientes WHERE re = '{txt}' OR id = '{txt}'")
+            c.execute(f"SELECT * FROM clientes WHERE "
+                      f"re = '{txt}' OR "
+                      f"id = '{txt}' OR "
+                      f"nome = '{txt}'")
             cliente = c.fetchone()
             if cliente is None:
                 print("Nao encontrado")

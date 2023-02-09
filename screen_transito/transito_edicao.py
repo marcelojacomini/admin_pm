@@ -99,13 +99,13 @@ class TransitoEdicao(tk.Toplevel):
 
         lb_competencia = ttk.Label(linha3, text='Competência', font=('', 10, 'bold'))
         lb_competencia.grid(row=0, column=4, sticky='w')
-        self.competencia = ttk.Label(linha3, text='', background='#FFDAB9', width=30)
+        self.competencia = ttk.Label(linha3, text='', background='#696969', width=30)
         self.competencia.grid(row=1, column=4, ipady=3)
 
         ##############################################################################################################
         linha4 = ttk.Frame(self)
         linha4.pack(fill='x', padx=20, pady=25)
-        self.artigo = ttk.Label(linha4, text='', background='#FFDAB9', width=100)
+        self.artigo = ttk.Label(linha4, text='', background='#696969', width=100)
         self.artigo.pack(fill='x', ipady=3)
 
         ##############################################################################################################
@@ -247,8 +247,8 @@ class TransitoEdicao(tk.Toplevel):
                 self.artigo['text'] = f" {cod.artigo}"
                 self.competencia['font'] = ('', 10, 'bold')
                 self.artigo['font'] = ('', 10, 'bold')
-                self.competencia['background'] = '#F0FFF0'
-                self.artigo['background'] = '#F0FFF0'
+                self.competencia['background'] = '#696969'
+                self.artigo['background'] = '#696969'
                 ait_global.valor = "{:.2f}".format(cod.valor * cod.fator)
             else:
                 self.competencia['text'] = ' Cód. Inválido'

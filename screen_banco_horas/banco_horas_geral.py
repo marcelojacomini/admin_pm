@@ -52,10 +52,10 @@ class BancoHorasGeral(tk.Toplevel):
                                    state='disabled', command=self.salva_horas)
         self.bt_salva.grid(row=1, column=3, padx=10)
 
-        self.lb_selecionado = ttk.Label(self.form, text='', font=('Arial', 14, 'bold'), style='secondary')
+        self.lb_selecionado = ttk.Label(self.form, text='', font=('Arial', 14, 'bold'))
         self.lb_selecionado.grid(row=2, column=0, columnspan=4, sticky='w')
 
-        self.lb_msg = ttk.Label(self.form, text='', font=('Arial', 12, 'bold'), style='secondary')
+        self.lb_msg = ttk.Label(self.form, text='', font=('Arial', 12, 'bold'))
         self.lb_msg.grid(row=3, column=0, columnspan=4, sticky='w')
 
         ###################################################################################################
@@ -84,9 +84,9 @@ class BancoHorasGeral(tk.Toplevel):
         # PREENCHE LISTA DE SALDOS
         self.atualiza_t_saldo()
 
-        self.t_saldo.tag_configure('excedente', foreground='#FF0000', font=('', 9, 'bold'))
-        self.t_saldo.tag_configure('alerta', foreground='#D2691E', font=('', 9, 'bold'))
-        self.t_saldo.tag_configure('normal', foreground='#006400', font=('', 9, 'bold'))
+        self.t_saldo.tag_configure('excedente', foreground='red', font=('', 9, 'bold'))
+        self.t_saldo.tag_configure('alerta', foreground='#FFD700', font=('', 9, 'bold'))
+        self.t_saldo.tag_configure('normal', foreground='#E0FFFF', font=('', 9, 'bold'))
 
         separador = ttk.Label(self.lista_saldo, text='')
         separador.grid(row=0, column=2, padx=5)
@@ -112,8 +112,8 @@ class BancoHorasGeral(tk.Toplevel):
         self.t_ext.configure(yscrollcommand=self.scrool_ext.set)
         self.scrool_ext.grid(row=0, column=4, sticky='ns')
 
-        self.t_ext.tag_configure('negativo', foreground='#FF0000', font=('', 9, 'bold'))
-        self.t_ext.tag_configure('normal', foreground='#006400', font=('', 9, 'bold'))
+        self.t_ext.tag_configure('negativo', foreground='red', font=('', 9, 'bold'))
+        self.t_ext.tag_configure('normal', foreground='#E0FFFF', font=('', 9, 'bold'))
 
     def atualiza_t_saldo(self):
         for cliente in self.t_saldo.get_children():

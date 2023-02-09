@@ -27,9 +27,9 @@ class ClienteGeral(tk.Toplevel):
         self.lista = ttk.Frame(self)
         self.lista.place(relx=0.03, rely=0.06, relwidth=0.64, relheight=0.77)
         # TREEVIEW DA LISTA
-        self.colunas = ['id', 'grad', 're', 'nome']
-        self.largura = [40, 80, 70, 290]
-        ancora = ("center", "w", "center", "w")
+        self.colunas = ['grad', 're', 'nome']
+        self.largura = [80, 70, 290]
+        ancora = ("w", "center", "w")
         i = 0
         self.t_cliente = ttk.Treeview(self.lista, columns=self.colunas, show='headings',
                                       height=33, selectmode='browse')
@@ -61,7 +61,7 @@ class ClienteGeral(tk.Toplevel):
         # BOTÃO NOVO REGISTRO DE CLIENTE (DADOS FUNCIONAIS)
         self.bt_novo = ttk.Button(self.menu, text='CADASTRAR NOVO', width=60, command=ClienteNovo, style='success')
         self.bt_novo.pack(pady=3)
-        self.divide = ttk.Label(self.menu, text=' ', width=60, style='darl-inverse')
+        self.divide = ttk.Label(self.menu, text='OPÇÕES', width=60, style='light')
         self.divide.pack(pady=15)
 
         # BOTÃO EDITAR DADOS FUNCIONAIS
@@ -93,7 +93,7 @@ class ClienteGeral(tk.Toplevel):
             self.t_cliente.delete(cliente)
         cliente = lista_clientes()
         for i in cliente:
-            i = [i['id'], i['graduacao_txt'], f"{i['re']}-{i['dc']}", i['nome']]
+            i = [i['graduacao_txt'], f"{i['re']}-{i['dc']}", i['nome']]
             self.t_cliente.insert('', tk.END, values=i)
 
     # FUNÇÃO QUE RECEBE OS DADOS DO CLIENTE SELECIONADO E SETA NO OBJ_CLIENTE_GLOBAL
@@ -102,7 +102,7 @@ class ClienteGeral(tk.Toplevel):
             it = self.t_cliente.focus()
             dados = self.t_cliente.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[0])
+            cliente_global.set_cliente(dados[2])
             self.bt_funcionais['state'] = 'normal'
             self.bt_contato['state'] = 'normal'
             self.bt_endereco['state'] = 'normal'

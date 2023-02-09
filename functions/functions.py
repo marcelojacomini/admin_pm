@@ -95,7 +95,7 @@ def format_cpf(campo, texto):
 
 
 def formatar_moeda(valor):
-    valor = (f"{valor:_.2f}").replace('.', ',').replace('_', '.')
+    valor = f"{valor:_.2f}".replace('.', ',').replace('_', '.')
     return valor
 
 
@@ -103,7 +103,7 @@ def formatar_moeda(valor):
 # FUNÇÕES PARA ENTRADA DE CONTATOS
 ###########################################################################################
 def contato_mask(tipo, campo, texto):
-    if tipo == 'Telefone':
+    if tipo == '1-Telefone':
         if len(texto) >= 11:
             campo.delete(11, "end")
         elif not is_number(texto):
@@ -111,7 +111,7 @@ def contato_mask(tipo, campo, texto):
 
 
 def format_telefone(tipo, campo, texto):
-    if tipo == 'Telefone':
+    if tipo == '1-Telefone':
         if len(texto) == 9:
             campo['foreground'] = 'white'
             campo.insert(0, '15-')

@@ -116,7 +116,6 @@ class ClienteContato(tk.Toplevel):
         self.contato_selecionado.contato = dados[2]
         self.bt_delete['state'] = 'normal'
 
-
     # SALVA NOVO CONTATO
     def salvar(self):
         dados = [self.tipo.get(), self.contato.get().lower()]

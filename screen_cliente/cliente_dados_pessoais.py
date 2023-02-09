@@ -31,7 +31,7 @@ class ClienteDadosPessoais(tk.Toplevel):
                                   text=f"Dados Pessoais de\n"
                                        f"{cliente_global.graduacao_txt} "
                                        f"{cliente_global.re}-{cliente_global.dc} "
-                                       f"{cliente_global.nome}", style='warning')
+                                       f"{cliente_global.nome}")
         self.lcliente.pack()
 
         # FORMULÁRIO

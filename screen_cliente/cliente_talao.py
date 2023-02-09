@@ -55,7 +55,7 @@ class ClienteTalao(tk.Toplevel):
         self.estadual_fim.grid(row=1, column=3)
         self.estadual_fim.insert(0, self.tl_atual.ef)
 
-        self.bt_atualizar = ttk.Button(self, text='ATUALIZAR TALÕES', style='secondary',
+        self.bt_atualizar = ttk.Button(self, text='ATUALIZAR TALÕES', style='warning',
                                        command=self.atualiza_taloes)
         self.bt_atualizar.pack(fill='x', pady=20, padx=10)
 

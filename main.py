@@ -24,7 +24,8 @@ class App(tk.Tk):
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
         self.st = ttkbootstrap.Style()
-        self.st.theme_use("admin_brown")
+        # self.st.theme_use("admin_brown")
+        self.st.theme_use("darkly")
 
         ######################################################################################################
         # menu (flat, groove, raised, ridge, solid, or sunken)

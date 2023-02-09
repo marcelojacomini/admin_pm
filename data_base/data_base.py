@@ -38,7 +38,6 @@ class Con:
                 password=self.admin_pass,
                 cursorclass=pymysql.cursors.DictCursor
             )
-
             # print("Conectado ao banco")
             return self.conexao
         except SystemError:
@@ -55,7 +54,7 @@ class Con:
             self.host = "localhost"
         # APÓS CRIAR ARQUIVO CONF CHAMA A FUNÇÃO PARA CRIAR DATABASE,
         # SE FOR A PRIMEIRA EXECUÇÃO DO BANCO IRÁ CRIAR AS TABELAS
-        self.create_database()
+        # self.create_database()
 
     # FUNÇÃO CHAMADA PARA CRIAR O DATABASE E TABELAS
     def create_database(self):
