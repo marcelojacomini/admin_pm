@@ -1,5 +1,6 @@
-from data_base.data_base import Con
+from classes.cl_cliente import *
 from datetime import datetime
+from functions.functions import formatar_moeda
 
 
 class Ait:
@@ -54,39 +55,39 @@ class Ait:
 
     def update_ait(self):
         cnx = Con().con()
-        #try:
-        with cnx.cursor() as c:
-            c.execute(
-                f"UPDATE tr_ait SET "
-                f"numero = '{self.numero}', "
-                f"placa = '{self.placa}', "
-                f"condutor = '{self.condutor}', "
-                f"local = '{self.local}', "
-                f"dia = '{self.dia}', "
-                f"hora = '{self.hora}', "
-                f"re = '{self.re}', "
-                f"codigo = {self.codigo}, "
-                f"competencia = '{self.competencia}', "
-                f"artigo = '{self.artigo}', "
-                f"crr = '{self.crr}', "
-                f"remocao = '{self.remocao}', "
-                f"cnh = '{self.cnh}', "
-                f"alcoolemia = '{self.alcoolemia}', "
-                f"obs = '{self.obs}', "
-                f"talao = '{self.talao}', "
-                f"valor = {self.valor} WHERE id_ait = {self.id_ait}")
-            cnx.commit()
-            return True
-        #except:
-        #    return False
+        try:
+            with cnx.cursor() as c:
+                c.execute(
+                    f"UPDATE tr_ait SET "
+                    f"numero = '{self.numero}', "
+                    f"placa = '{self.placa}', "
+                    f"condutor = '{self.condutor}', "
+                    f"local = '{self.local}', "
+                    f"dia = '{self.dia}', "
+                    f"hora = '{self.hora}', "
+                    f"re = '{self.re}', "
+                    f"codigo = {self.codigo}, "
+                    f"competencia = '{self.competencia}', "
+                    f"artigo = '{self.artigo}', "
+                    f"crr = '{self.crr}', "
+                    f"remocao = '{self.remocao}', "
+                    f"cnh = '{self.cnh}', "
+                    f"alcoolemia = '{self.alcoolemia}', "
+                    f"obs = '{self.obs}', "
+                    f"talao = '{self.talao}', "
+                    f"valor = {self.valor} WHERE id_ait = {self.id_ait}")
+                cnx.commit()
+                return True
+        except:
+            return False
 
 
 def insert_ait(a):
     cnx = Con().con()
     try:
         with cnx.cursor() as c:
-            c.execute(f"INSERT INTO tr_ait (numero, placa, condutor, local, dia, hora, re, codigo, competencia, artigo, "
-                      f"crr, remocao, cnh, alcoolemia, obs, talao, valor) VALUES ("
+            c.execute(f"INSERT INTO tr_ait (numero, placa, condutor, local, dia, hora, re, codigo, competencia, "
+                      f"artigo, crr, remocao, cnh, alcoolemia, obs, talao, valor) VALUES ("
                       f"'{a[0]}' ,"
                       f"'{a[1]}' ,"
                       f"'{a[2]}' ,"
@@ -151,3 +152,82 @@ def lista_ait_texto(texto):
                   f"(codigo LIKE '{texto}%') "
                   f"ORDER BY dia DESC")
         return c.fetchall()
+
+
+def lista_ait_resumo_fitros(dia_de, dia_ate):
+    #######################################################################################
+    # RESUMO GERAL
+    #######################################################################################
+    resumo = []
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        # RESUMO DE AMBAS AS COMPETÊNCIAS
+        c.execute(f"SELECT * FROM tr_ait WHERE "
+                  f"(dia >= '{dia_de}') AND "
+                  f"(dia <= '{dia_ate}') "
+                  f"ORDER BY dia DESC")
+        retorno = c.fetchall()
+        soma = 0.0
+        for i in retorno:
+            soma = i['valor'] + soma
+        soma = formatar_moeda(soma)
+        resumo.append(['MUNICIPAL+ESTADUAL', len(retorno), f" R$ {soma}"])
+        # RESUMO MUNICIPAL
+        c.execute(f"SELECT * FROM tr_ait WHERE "
+                  f"(talao = 'Municipio') AND "
+                  f"(dia >= '{dia_de}') AND "
+                  f"(dia <= '{dia_ate}') "
+                  f"ORDER BY dia DESC")
+        retorno = c.fetchall()
+        soma = 0.0
+        for i in retorno:
+            soma = i['valor'] + soma
+        soma = formatar_moeda(soma)
+        resumo.append(['MUNICIPAL', len(retorno), f" R$ {soma}"])
+        # RESUMO ESTADUAL
+        c.execute(f"SELECT * FROM tr_ait WHERE "
+                  f"(talao = 'Estado') AND "
+                  f"(dia >= '{dia_de}') AND "
+                  f"(dia <= '{dia_ate}') "
+                  f"ORDER BY dia DESC")
+        retorno = c.fetchall()
+        soma = 0.0
+        for i in retorno:
+            soma = i['valor'] + soma
+        soma = formatar_moeda(soma)
+        resumo.append(['ESTADUAL', len(retorno), f" R$ {soma}"])
+
+    return resumo
+
+
+def lista_ait_resumo_individual(dia_de, dia_ate):
+    resumo = []
+    clientes = lista_clientes()
+
+    cnx = Con().con()
+    with cnx.cursor() as c:
+        # RESUMO DE AMBAS AS COMPETÊNCIAS
+        c.execute(f"SELECT * FROM tr_ait WHERE "
+                  f"(dia >= '{dia_de}') AND "
+                  f"(dia <= '{dia_ate}') "
+                  f"ORDER BY dia DESC")
+        aits = c.fetchall()
+
+    for cliente in clientes:
+        dados = [f"{cliente['re']}-{cliente['dc']}", cliente['tarja']]
+        conta_total = 0
+        conta_estado = 0
+        conta_municipio = 0
+        for ait in aits:
+            if ait['re'] == cliente['re']:
+                conta_total = conta_total + 1
+                if ait['talao'] == 'Estado':
+                    conta_estado = conta_estado + 1
+                if ait['talao'] == 'Municipio':
+                    conta_municipio = conta_municipio + 1
+        dados.append(conta_municipio)
+        dados.append(conta_estado)
+        dados.append(conta_total)
+        resumo.append(dados)
+
+    return resumo

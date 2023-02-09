@@ -9,6 +9,7 @@ from screen_banco_horas.banco_horas_geral import *
 
 from screen_transito.transito_cadastro import *
 from screen_transito.transito_consulta import *
+from screen_transito.transito_relatorios import *
 
 from screen_config.cf_config import *
 
@@ -51,8 +52,9 @@ class App(tk.Tk):
                                        width=40, style="secondary", command=BancoHorasGeral)
         self.bt_bco_horas.pack(fill='x', pady=5, padx=2)
 
+        ######################################################################################################
         frame_transito = ttk.Frame(self, borderwidth=2, relief='solid')
-        frame_transito.place(relx=0.40, rely=0.05, relwidth=0.30, relheight=0.85)
+        frame_transito.place(relx=0.40, rely=0.05, relwidth=0.30)
 
         self.bt_cad_ait = ttk.Button(frame_transito, text="TRÂNSITO - CADASTRAR AIT", style='info',
                                      command=TransitoCadastro)
@@ -61,6 +63,10 @@ class App(tk.Tk):
         self.bt_consluta_ait = ttk.Button(frame_transito, text="TRÂNSITO - CONSULTAS", style='info',
                                           command=TransitoConsulta)
         self.bt_consluta_ait.pack(fill='x', pady=5, padx=2)
+
+        self.bt_relatorios_ait = ttk.Button(frame_transito, text="TRÂNSITO - RELATÓRIOS", style='info',
+                                            command=TransitoRelatorios)
+        self.bt_relatorios_ait.pack(fill='x', pady=5, padx=2)
 
         frame_config = ttk.Frame(self, borderwidth=2, relief='solid')
         frame_config.place(relx=0.75, rely=0.05, relwidth=0.20)

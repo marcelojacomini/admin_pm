@@ -21,6 +21,10 @@ def data_atual_pt():
     return datetime.now().strftime("%d/%m/%Y")
 
 
+def inicio_mes_pt():
+    return datetime.now().strftime("01/%m/%Y")
+
+
 def ano_atual():
     return datetime.now().strftime("%Y")
 
