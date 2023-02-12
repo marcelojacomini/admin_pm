@@ -1,5 +1,4 @@
-from main import *
-from screen_config.cf_config import *
+from imports import *
 
 
 class Login(tk.Tk):
@@ -27,14 +26,25 @@ class Login(tk.Tk):
         self.user.grid(row=0, column=1)
         lg_pass = ttk.Label(frame_user, text='Senha: ')
         lg_pass.grid(row=1, column=0, padx=5, pady=10)
-        self.password = ttk.Entry(frame_user)
+        self.password = ttk.Entry(frame_user, show='*')
         self.password.grid(row=1, column=1)
         self.bt_acesso = ttk.Button(frame_user, text='ACESSAR', command=self.acessar)
         self.bt_acesso.grid(row=2, column=0, pady=15, columnspan=2, sticky='we')
 
-    def acessar(self):
-        App().mainloop()
+        frame_msg = ttk.Frame(self)
+        frame_msg.pack(fill='x', pady=10)
+        self.lb_msg = ttk.Label(frame_msg, text='')
+        self.lb_msg.pack()
 
+    def acessar(self):
+        user_session.user = self.user.get()
+        user_session.password = self.password.get()
+        login = user_session.set_user()
+        if user_session.user:
+            self.withdraw()
+            App()
+        else:
+            self.lb_msg['text'] = "Usuário ou senha inválido"
 
 log = Login()
 log.mainloop()

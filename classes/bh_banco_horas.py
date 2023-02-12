@@ -31,7 +31,8 @@ class SaldoHoras:
                 c.execute(f"UPDATE bh_saldo SET saldo = {self.saldo} WHERE re = '{self.re}'")
                 cnx.commit()
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 
@@ -59,7 +60,8 @@ class BancoHoras:
                 cnx.commit()
                 confere_horas(self.re)
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

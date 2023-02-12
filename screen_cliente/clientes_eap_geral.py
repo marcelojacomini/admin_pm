@@ -1,23 +1,16 @@
-import tkinter as tk
+from imports import *
 from datetime import timedelta
-
-import ttkbootstrap as ttk
-from functions.tk_center import tk_center
-from ttkbootstrap import DateEntry
-
-from functions.globals import cliente_global, list_periodo_ead
-from functions.functions import data_us, data_mask, ano_atual, data_atual_pt
-from relatorios.rel_eap import *
-from classes.cl_contato import get_email_funcional
+from functions.functions import data_mask, data_us, ano_atual, data_atual_pt
+from classes.cl_contato import *
 from classes.fn_mails import *
+from relatorios.rel_eap import *
 
 
 class ClientesEapGeral(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 800, 740)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 800, 740))
         self.title("ADMIN - INFORMAÇÕES DE EAP")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
@@ -114,30 +107,30 @@ class ClientesEapGeral(tk.Toplevel):
             it = self.t_eap.focus()
             dados = self.t_eap.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[1][:6])
-            self.lb_cliente['text'] = cliente_global.nome
+            CLIENTE.set_cliente(dados[1][:6])
+            self.lb_cliente['text'] = CLIENTE.nome
             self.bt_cliente['state'] = 'normal'
-            self.eap_selecionado = Eap().set_eap(cliente_global.re)
+            self.eap_selecionado = Eap().set_eap(CLIENTE.re)
             if self.eap_selecionado:
                 self.periodo.set(self.eap_selecionado.periodo_ead)
                 self.data_eap.entry.delete(0, 'end')
                 self.data_eap.entry.insert(0, data_pt(self.eap_selecionado.data_eap))
             self.bt_altera_eap['state'] = 'normal'
-        except IndexError:
-            print('')
+        except Exception as e:
+            print(e, x)
 
     def altera_eap(self):
-        insert_eap(cliente_global.re, self.periodo.get(), data_us(self.data_eap.entry.get()), '')
+        insert_eap(CLIENTE.re, self.periodo.get(), data_us(self.data_eap.entry.get()), '')
         self.lb_msg['text'] = "Alterações Salvas"
         self.atualiza_t_eap()
         # except:
         #    print('erro ao alterar eap selecionado')
 
     def gerar_email_eap(self):
-        e_mail = get_email_funcional(cliente_global.re)
+        e_mail = get_email_funcional(CLIENTE.re)
         Mails().send_mail(e_mail['contato'],
                           f"Aviso de Programação para o EAP {ano_atual()}",
-                          f"Olá {cliente_global.nome}\n"
+                          f"Olá {CLIENTE.nome}\n"
                           f"Lembrando que não é necessário responder esse e_mail...\n\n"
                           f"Seu EAP está programado em {ano_atual()}: \n\n"
                           f"Período do EAD: 2ª quinzena de {self.eap_selecionado.periodo_ead}\n\n"
@@ -146,7 +139,7 @@ class ClientesEapGeral(tk.Toplevel):
                           f"{data_pt(self.eap_selecionado.data_eap + timedelta(days=1))} "
                           f"\n\nAtenciosamente: Equipe ADM")
 
-        edita_aviso_eap(cliente_global.re, data_us(data_atual_pt()))
+        edita_aviso_eap(CLIENTE.re, data_us(data_atual_pt()))
         self.atualiza_t_eap()
 
 

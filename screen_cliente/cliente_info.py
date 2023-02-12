@@ -1,10 +1,5 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from functions.tk_center import tk_center
-
-from functions.globals import *
-from functions.functions import data_pt, data_us, data_mask
-
+from imports import *
+from functions.functions import data_mask, data_pt, data_us
 from classes.cl_info import *
 
 
@@ -32,9 +27,9 @@ class ClienteInfo(tk.Toplevel):
         self.cliente.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.10)
         self.lcliente = ttk.Label(self.cliente, font=('', 14),
                                   text=f"Informações / Publicações\n"
-                                       f"{cliente_global.graduacao_txt} "
-                                       f"{cliente_global.re}-{cliente_global.dc} "
-                                       f"{cliente_global.nome}")
+                                       f"{CLIENTE.graduacao_txt} "
+                                       f"{CLIENTE.re}-{CLIENTE.dc} "
+                                       f"{CLIENTE.nome}")
         self.lcliente.pack()
         # PESQUISAS
         self.pesquisa = ttk.Frame(self)
@@ -110,7 +105,7 @@ class ClienteInfo(tk.Toplevel):
     def atualiza_t_info(self):
         for registro in self.t_info.get_children():
             self.t_info.delete(registro)
-        info = lista_info(cliente_global.re)
+        info = lista_info(CLIENTE.re)
         for i in info:
             i = [i['re'], data_pt(i['data_info']), i['descricao']]
             self.t_info.insert('', tk.END, values=i)
@@ -123,14 +118,14 @@ class ClienteInfo(tk.Toplevel):
         try:
             self.info_selecionado.set_info(dados[0])
             self.bt_delete['state'] = 'normal'
-        except:
-            pass
+        except Exception as e:
+            print(e, x)
 
     # PESQUISA INFO
     def busca_info(self, texto):
         for registro in self.t_info.get_children():
             self.t_info.delete(registro)
-        info = pesquisa_info_texto(cliente_global.re, texto)
+        info = pesquisa_info_texto(CLIENTE.re, texto)
         for i in info:
             i = [i['re'], data_pt(i['data_info']), i['descricao']]
             self.t_info.insert('', tk.END, values=i)
@@ -142,7 +137,7 @@ class ClienteInfo(tk.Toplevel):
             self.lb_msg['text'] = "A Descrição deve ser preenchida!!!"
         else:
             info = Info()
-            info.re = cliente_global.re
+            info.re = CLIENTE.re
             info.data_info = str(data_us(self.data_info.entry.get()))
             info.descricao = self.descricao.get().upper()
             info.insert_info()

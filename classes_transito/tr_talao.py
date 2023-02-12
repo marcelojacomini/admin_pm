@@ -1,5 +1,3 @@
-from data_base.data_base import Con
-
 from classes.cl_cliente import *
 
 
@@ -54,7 +52,8 @@ class Talao:
                               f"('{self.re}', '{self.mi}', '{self.mf}', '{self.ei}', '{self.ef}')")
                     cnx.commit()
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

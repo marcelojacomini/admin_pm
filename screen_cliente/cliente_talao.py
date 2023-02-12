@@ -1,8 +1,4 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from functions.tk_center import tk_center
-from functions.globals import cliente_global
-
+from imports import *
 from classes_transito.tr_talao import *
 
 
@@ -19,16 +15,16 @@ class ClienteTalao(tk.Toplevel):
         self.grab_set()
 
         # Inicia configurações da GUI
-        self.tl_atual = Talao().set_talonario(cliente_global.re)
+        self.tl_atual = Talao().set_talonario(CLIENTE.re)
 
         # INFO DO CLIENTE
         self.cliente = ttk.Frame(self)
         self.cliente.pack(fill='x', padx=10, pady=10)
         self.lcliente = ttk.Label(self.cliente, font=('', 10),
                                   text=f"Talonário de Infrações\n"
-                                       f"{cliente_global.graduacao_txt} "
-                                       f"{cliente_global.re}-{cliente_global.dc} "
-                                       f"{cliente_global.nome}")
+                                       f"{CLIENTE.graduacao_txt} "
+                                       f"{CLIENTE.re}-{CLIENTE.dc} "
+                                       f"{CLIENTE.nome}")
         self.lcliente.pack(fill='x')
 
         form = ttk.Frame(self)
@@ -72,4 +68,3 @@ class ClienteTalao(tk.Toplevel):
         else:
             self.lb_msg['text'] = "Houve um erro ao atualizar o talonário!!!"
         self.bt_atualizar['state'] = "disabled"
-

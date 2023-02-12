@@ -1,11 +1,6 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from functions.tk_center import tk_center
-
-from functions.globals import *
-from functions.functions import contato_mask, format_telefone
-
+from imports import *
 from classes.cl_contato import *
+from functions.functions import contato_mask, format_telefone
 
 
 class ClienteContato(tk.Toplevel):
@@ -32,9 +27,9 @@ class ClienteContato(tk.Toplevel):
         self.cliente.place(relx=0.01, rely=0.01, relwidth=0.98, relheight=0.10)
         self.lcliente = ttk.Label(self.cliente, font=('', 14),
                                   text=f"Contatos de "
-                                       f"{cliente_global.graduacao_txt} "
-                                       f"{cliente_global.re}-{cliente_global.dc} "
-                                       f"{cliente_global.nome}")
+                                       f"{CLIENTE.graduacao_txt} "
+                                       f"{CLIENTE.re}-{CLIENTE.dc} "
+                                       f"{CLIENTE.nome}")
         self.lcliente.pack()
 
         # TREEVIEW LISTA DE CONTATOS CADASTRADOS PARA O CLIENTE
@@ -101,20 +96,23 @@ class ClienteContato(tk.Toplevel):
     def atualiza_t_contato(self):
         for ct in self.t_contatos.get_children():
             self.t_contatos.delete(ct)
-        contatos = lista_contatos(cliente_global.re)
+        contatos = lista_contatos(CLIENTE.re)
         for i in contatos:
             i = [i['re'], i['tipo'], i['contato']]
             self.t_contatos.insert('', tk.END, values=i)
 
     # SELECIONA CONTATO
     def seleciona_contato(self, x):
-        it = self.t_contatos.focus()
-        dados = self.t_contatos.item(it)
-        dados = dados.get('values')
-        self.contato_selecionado.re = str(dados[0])
-        self.contato_selecionado.tipo = dados[1]
-        self.contato_selecionado.contato = dados[2]
-        self.bt_delete['state'] = 'normal'
+        try:
+            it = self.t_contatos.focus()
+            dados = self.t_contatos.item(it)
+            dados = dados.get('values')
+            self.contato_selecionado.re = str(dados[0])
+            self.contato_selecionado.tipo = dados[1]
+            self.contato_selecionado.contato = dados[2]
+            self.bt_delete['state'] = 'normal'
+        except Exception as e:
+            print(e, x)
 
     # SALVA NOVO CONTATO
     def salvar(self):
@@ -124,9 +122,9 @@ class ClienteContato(tk.Toplevel):
         elif self.tipo.get() == 'Telefone' and len(self.contato.get()) < 8:
             print("Erro no telefone")
         else:
-            print('pass')
+            pass
         ct = Contato()
-        ct.re = cliente_global.re
+        ct.re = CLIENTE.re
         ct.tipo = self.tipo.get()
         ct.contato = self.contato.get()
         ct.insert_contato()
@@ -141,9 +139,6 @@ class ClienteContato(tk.Toplevel):
         self.bt_cancela = ttk.Button(self.exclusao, text='CANCELA', style='info', width=18,
                                      command=(lambda: self.exclusao_confirmada(False)))
         self.bt_cancela.grid(row=2, column=1, pady=5)
-        '''
-        if confirma:
-            '''
 
     def exclusao_confirmada(self, b):
         if b:

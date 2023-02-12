@@ -1,10 +1,5 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-
-from functions.tk_center import tk_center
-from functions.globals import *
-from functions.functions import *
+from imports import *
+from functions.functions import re_mask, dc_mask, data_mask, data_us
 from classes.cl_cliente import *
 
 

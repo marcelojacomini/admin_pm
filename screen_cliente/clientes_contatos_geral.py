@@ -82,11 +82,11 @@ class ClientesContatosGeral(tk.Toplevel):
             it = self.t_contatos.focus()
             dados = self.t_contatos.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[1][:6])
-            self.lb_cliente['text'] = cliente_global.nome
+            CLIENTE.set_cliente(dados[1][:6])
+            self.lb_cliente['text'] = CLIENTE.nome
             self.bt_cliente['state'] = 'normal'
-        except IndexError:
-            print('')
+        except Exception as e:
+            print(e, x)
 
 
 def exportar_contatos_xlsx(lb_msg):
@@ -98,8 +98,9 @@ def exportar_contatos_xlsx(lb_msg):
             lista_emails = e_mails()
             lista_emails.to_excel(writer, sheet_name="E-Mails")
             lb_msg['text'] = "Arquivo exportado para pasta 'Documentos'"
-    except:
+    except Exception as e:
         lb_msg['text'] = "Houve um erro ao exportar arquivo!!!'"
+        print(e)
 
 
 def exportar_telefones_pdf(lb_msg):
@@ -139,5 +140,6 @@ def exportar_telefones_pdf(lb_msg):
     try:
         pdf.output(pasta_user)
         lb_msg['text'] = "Arquivo exportado para pasta 'Documentos'"
-    except:
+    except Exception as e:
         lb_msg['text'] = "Houve um erro ao exportar arquivo!!!'"
+        print(e)

@@ -1,29 +1,25 @@
-import ttkbootstrap
-
-from screen_cliente.clientegeral import ClienteGeral
+# CLIENTES
+from screen_cliente.clientegeral import *
 from screen_cliente.clientes_contatos_geral import *
 from screen_cliente.clientes_cnh_geral import *
 from screen_cliente.clientes_eap_geral import *
-
+# BANCO DE HORAS
 from screen_banco_horas.banco_horas_geral import *
-
+# TRANSITO
 from screen_transito.transito_cadastro import *
 from screen_transito.transito_consulta import *
 from screen_transito.transito_relatorios import *
-
-from screen_config.cf_config import *
 
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 900, 600)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 900, 600))
         self.title("ADMIN - POLICIA MILITAR")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
-        self.st = ttkbootstrap.Style()
+        self.st = ttk.Style()
         # self.st.theme_use("admin_brown")
         self.st.theme_use("darkly")
 
@@ -69,10 +65,14 @@ class App(tk.Tk):
                                             command=TransitoRelatorios)
         self.bt_relatorios_ait.pack(fill='x', pady=5, padx=2)
 
-        frame_config = ttk.Frame(self, borderwidth=2, relief='solid')
-        frame_config.place(relx=0.75, rely=0.05, relwidth=0.20)
-        bt_config = ttk.Button(frame_config, text='CONFIGURAÇÕES', style='dark', command=Configuracoes)
-        bt_config.pack(fill='x', pady=5, padx=2)
+        """
+        if user_session.user == "admin":
+            frame_config = ttk.Frame(self, borderwidth=2, relief='solid')
+            frame_config.place(relx=0.75, rely=0.05, relwidth=0.20)
+            bt_config = ttk.Button(frame_config, text='CONFIGURAÇÕES', style='dark', command=Configuracoes)
+            bt_config.pack(fill='x', pady=5, padx=2)
+        """
+
 
 ##############################################
 # SE MAIN CARREGA TELA INICIAL

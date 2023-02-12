@@ -1,8 +1,8 @@
 from os import path
 from fpdf import FPDF
-from relatorios.rel_cnh import *
 
 from screen_cliente.cliente_dados_pessoais import *
+from relatorios.rel_cnh import *
 
 
 class ClientesCnhGeral(tk.Toplevel):
@@ -91,11 +91,11 @@ class ClientesCnhGeral(tk.Toplevel):
             it = self.t_cnh.focus()
             dados = self.t_cnh.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[1][:6])
-            self.lb_cliente['text'] = cliente_global.nome
+            CLIENTE.set_cliente(dados[1][:6])
+            self.lb_cliente['text'] = CLIENTE.nome
             self.bt_cliente['state'] = 'normal'
-        except IndexError:
-            print('')
+        except Exception as e:
+            print(e, x)
 
 
 def exportar_cnh_xlsx(lb_msg):
@@ -105,8 +105,9 @@ def exportar_cnh_xlsx(lb_msg):
             lista_cnh = relatorio_cnh()
             lista_cnh.to_excel(writer, sheet_name="CNH")
             lb_msg['text'] = "Arquivo exportado para pasta 'Documentos'"
-    except:
+    except Exception as e:
         lb_msg['text'] = "Houve um erro ao exportar arquivo!!!'"
+        print(e)
 
 
 def exportar_cnh_pdf(lb_msg):
@@ -162,5 +163,6 @@ def exportar_cnh_pdf(lb_msg):
     try:
         pdf.output(pasta_user)
         lb_msg['text'] = "Arquivo exportado para pasta 'Documentos'"
-    except:
+    except Exception as e:
         lb_msg['text'] = "Houve um erro ao exportar arquivo!!!'"
+        print(e)

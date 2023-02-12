@@ -1,14 +1,9 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-
-from functions.tk_center import tk_center
-from functions.functions import data_mask, hora_mask, is_number, data_us
-
+from imports import *
+from functions.functions import data_mask, hora_mask, data_us, is_number
+from classes_transito.tr_talao import *
 from classes_transito.tr_ait import *
 from classes_transito.tr_logradouros import *
 from classes_transito.tr_infra import *
-from classes_transito.tr_talao import *
 
 
 class TransitoCadastro(tk.Toplevel):

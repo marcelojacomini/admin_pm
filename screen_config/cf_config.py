@@ -1,17 +1,12 @@
-import tkinter as tk
+from imports import *
 from os import path
-
-import ttkbootstrap as ttk
-
-from functions.tk_center import tk_center
 
 
 class Configuracoes(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 880, 650)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 880, 650))
         self.title("ADMIN - CONFIGURAÇÕES")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)

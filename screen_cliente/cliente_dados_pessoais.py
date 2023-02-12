@@ -1,12 +1,6 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from functions.tk_center import tk_center
-from ttkbootstrap import DateEntry
-
+from imports import *
+from functions.functions import cpf_mask, format_cpf, data_mask, data_pt, data_us
 from classes.cl_dados_pessoais import *
-
-from functions.globals import *
-from functions.functions import format_cpf, cpf_mask, data_pt, data_us, data_mask
 
 
 class ClienteDadosPessoais(tk.Toplevel):
@@ -22,23 +16,23 @@ class ClienteDadosPessoais(tk.Toplevel):
         self.grab_set()
 
         # Inicia configurações da GUI
-        self.dados = DadosPessoais().set_dados_pessoais(cliente_global.re)
+        self.dados = DadosPessoais().set_dados_pessoais(CLIENTE.re)
 
         # INFO DO CLIENTE
         self.cliente = ttk.Frame(self)
         self.cliente.place(relx=0.01, rely=0.05, relwidth=0.98, relheight=0.10)
         self.lcliente = ttk.Label(self.cliente, font=('', 14),
                                   text=f"Dados Pessoais de\n"
-                                       f"{cliente_global.graduacao_txt} "
-                                       f"{cliente_global.re}-{cliente_global.dc} "
-                                       f"{cliente_global.nome}")
+                                       f"{CLIENTE.graduacao_txt} "
+                                       f"{CLIENTE.re}-{CLIENTE.dc} "
+                                       f"{CLIENTE.nome}")
         self.lcliente.pack()
 
         # FORMULÁRIO
         self.form = ttk.Frame(self)
         self.form.place(relx=0.05, rely=0.18, relwidth=0.93, relheight=0.80)
         self.re = ttk.Entry(self)
-        self.re.insert(0, cliente_global.re)
+        self.re.insert(0, CLIENTE.re)
 
         self.linha1 = ttk.Frame(self.form)
         self.linha1.pack(fill='x', anchor='w', pady=10)
@@ -135,7 +129,7 @@ class ClienteDadosPessoais(tk.Toplevel):
         self.preenche_form()
 
     def preenche_form(self):
-        dados_pessoais = DadosPessoais().set_dados_pessoais(cliente_global.re)
+        dados_pessoais = DadosPessoais().set_dados_pessoais(CLIENTE.re)
         if dados_pessoais:
             self.cpf.insert(0, dados_pessoais.cpf)
             self.rg.insert(0, dados_pessoais.rg)
@@ -162,7 +156,7 @@ class ClienteDadosPessoais(tk.Toplevel):
             try:
                 novo.insert_dados_pessoais()
                 self.lb_msg['text'] = "DADOS SALVOS!!!!"
-                self.dados = DadosPessoais().set_dados_pessoais(cliente_global.re)
+                self.dados = DadosPessoais().set_dados_pessoais(CLIENTE.re)
             except SystemError:
                 self.lb_msg['text'] = "Erro ao gravar NOVO!"
         elif self.dados:
@@ -175,7 +169,7 @@ class ClienteDadosPessoais(tk.Toplevel):
 
     def coleta_form(self):
         dados_form = DadosPessoais()
-        dados_form.re = cliente_global.re
+        dados_form.re = CLIENTE.re
         dados_form.cpf = self.cpf.get()
         dados_form.rg = self.rg.get().upper()
         dados_form.nascimento = data_us(self.nascimento.entry.get())

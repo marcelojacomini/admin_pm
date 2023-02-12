@@ -1,12 +1,5 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-from functions.tk_center import tk_center
-from functions.functions import data_pt, data_us, formatar_moeda
-from functions.globals import ait_global
-
-from classes_transito.tr_ait import *
-from screen_transito.transito_edicao import TransitoEdicao
+from imports import *
+from screen_transito.transito_edicao import *
 
 
 class TransitoConsulta(tk.Toplevel):
@@ -173,7 +166,7 @@ class TransitoConsulta(tk.Toplevel):
                 self.ait_select = Ait()
                 dados = f"0{dados}"
                 self.ait_select.set_ait(dados)
-        except:
-            pass
-        ait_global.set_ait(self.ait_select.numero)
+        except Exception as e:
+            print(e)
+        AIT.set_ait(self.ait_select.numero)
         self.bt_editar['state'] = 'enabled'

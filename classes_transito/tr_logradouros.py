@@ -18,8 +18,8 @@ class Logradouros:
                 else:
                     c.execute(f"INSERT INTO tr_logradouros (logradouro) VALUES ('{self.logradouro}')")
                     cnx.commit()
-            except:
-                pass
+            except Exception as e:
+                print(e)
 
 
 def lista_logradouros():
@@ -46,8 +46,8 @@ def retorna_logradouro(parametro):
                 return parametro
             elif len(lista) == 0:
                 return parametro
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
 
 # alimentar o autocomplete

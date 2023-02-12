@@ -1,9 +1,5 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-from functions.tk_center import tk_center
+from imports import *
 from functions.functions import inicio_mes_pt, data_us
-
 from classes_transito.tr_ait import *
 
 
@@ -11,8 +7,7 @@ class TransitoRelatorios(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 850, 650)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 850, 650))
         self.title("ADMIN Trânsito - CONSULTAS")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
@@ -134,6 +129,7 @@ class TransitoRelatorios(tk.Toplevel):
         self.scrool = ttk.Scrollbar(self.linha1, orient=tk.VERTICAL, command=self.t_individual_pm.yview)
         self.t_individual_pm.configure(yscrollcommand=self.scrool.set)
         self.scrool.grid(column=2, row=1, sticky='ns', pady=3)
+
     def consulta_filtros(self):
         for widget in self.linha1.winfo_children():
             widget.destroy()

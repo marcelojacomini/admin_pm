@@ -1,17 +1,12 @@
-from tkinter import messagebox
 from datetime import datetime
 
 
-###########################################################################################
-# MESSAGE BOX
-###########################################################################################
-def mensagem(header, texto):
-    messagebox.showinfo(title=header, message=texto)
-
-
-def confirmacao(header, quest):
-    msg_box = messagebox.askyesno(header, quest, icon='warning')
-    return msg_box
+def tk_center(master, largura, altura):
+    w = master.winfo_screenwidth()
+    h = master.winfo_screenheight()
+    px = int(w/2 - largura/2)
+    py = int(h/2 - altura/2)
+    return f'{largura}x{altura}+{px}+{py}'
 
 
 ###########################################################################################
@@ -51,7 +46,8 @@ def is_number(numero):
     try:
         int(numero)
         return True
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 

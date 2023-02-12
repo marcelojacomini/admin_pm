@@ -1,19 +1,14 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-
-from functions.tk_center import tk_center
+from imports import *
 from classes.cl_cliente import *
-from functions.globals import *
-from functions.functions import *
+
+from functions.functions import re_mask, dc_mask, data_mask, data_us, data_pt
 
 
 class ClienteEdita(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 500, 450)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 500, 450))
         self.title("ADMIN - EDITA PM")
         # self.iconbitmap("ico.ico")
         self.resizable(False, False)
@@ -73,6 +68,11 @@ class ClienteEdita(tk.Toplevel):
         self.bt_salvar = ttk.Button(self.linha4, text="SALVAR ALTERAÇÕES", style='warning', command=self.salvar)
         self.bt_salvar.pack(fill='x')
 
+        self.linha5 = ttk.Frame(self)
+        self.linha5.pack(fill='x', pady=15, padx=15)
+        self.lb_msg = ttk.Label(self.linha5, text="")
+        self.lb_msg.pack()
+
         ###################################################################################################
         # BIND
         ###################################################################################################
@@ -95,9 +95,9 @@ class ClienteEdita(tk.Toplevel):
                  data_us(self.promocao.entry.get())
                  ]
         if "" in dados:
-            mensagem("Erro!", "Existem dados em branco")
+            self.lb_msg['text'] = "Dados não podem ficar em branco!"
         else:
-            grava = edita_cliente(cliente_global.id,
+            grava = edita_cliente(CLIENTE.id,
                                   self.re.get(),
                                   self.dc.get().upper(),
                                   self.nome.get().upper(),
@@ -111,16 +111,16 @@ class ClienteEdita(tk.Toplevel):
             if grava:
                 self.destroy()
             else:
-                mensagem("Erro", "Houve um erro ao gravar os dados!")
+                self.lb_msg['text'] = "Houve um erro ao gravar os dados!"
 
     def preenche_form(self):
-        self.re.insert(0, cliente_global.re)
-        self.dc.insert(0, cliente_global.dc)
-        self.nome.insert(0, cliente_global.nome)
+        self.re.insert(0, CLIENTE.re)
+        self.dc.insert(0, CLIENTE.dc)
+        self.nome.insert(0, CLIENTE.nome)
         self.admissao.entry.delete(0, 'end')
-        self.admissao.entry.insert(0, data_pt(cliente_global.admissao))
+        self.admissao.entry.insert(0, data_pt(CLIENTE.admissao))
         self.promocao.entry.delete(0, 'end')
-        self.promocao.entry.insert(0, data_pt(cliente_global.promocao))
-        self.graduacao.set(cliente_global.graduacao_txt)
-        self.tarja.insert(0, cliente_global.tarja)
-        self.ativo.set(cliente_global.ativo.upper())
+        self.promocao.entry.insert(0, data_pt(CLIENTE.promocao))
+        self.graduacao.set(CLIENTE.graduacao_txt)
+        self.tarja.insert(0, CLIENTE.tarja)
+        self.ativo.set(CLIENTE.ativo.upper())

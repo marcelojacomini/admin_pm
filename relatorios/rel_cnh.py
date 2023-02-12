@@ -1,7 +1,7 @@
-from classes.cl_cliente import *
 from classes.cl_dados_pessoais import *
+from functions.functions import verifica_validade, data_pt
+
 import pandas as pd
-from functions.functions import data_pt, verifica_validade
 
 
 def relatorio_cnh():
@@ -28,7 +28,3 @@ def relatorio_cnh():
                       data=relatorio)
 
     return df
-
-
-
-# relatorio_cnh()

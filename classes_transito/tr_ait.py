@@ -78,7 +78,8 @@ class Ait:
                     f"valor = {self.valor} WHERE id_ait = {self.id_ait}")
                 cnx.commit()
                 return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 
@@ -108,7 +109,8 @@ def insert_ait(a):
                       f")")
             cnx.commit()
             return True
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 

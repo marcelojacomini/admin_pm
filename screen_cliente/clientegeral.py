@@ -1,3 +1,4 @@
+# SCREENS
 from screen_cliente.clientenovo import *
 from screen_cliente.clienteedita import *
 from screen_cliente.clientecontato import *
@@ -11,8 +12,7 @@ class ClienteGeral(tk.Toplevel):
     def __init__(self):
         super().__init__()
         # INICIA A CLASSE PARA JANELA PRINCIPAL
-        geo = tk_center(self, 800, 700)
-        self.geometry(geo)
+        self.geometry(tk_center(self, 800, 700))
         self.title("ADMIN - POLÍCIA MILITAR")
         self.iconbitmap("img/pm_ico.ico")
         self.resizable(False, False)
@@ -102,12 +102,12 @@ class ClienteGeral(tk.Toplevel):
             it = self.t_cliente.focus()
             dados = self.t_cliente.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[2])
+            CLIENTE.set_cliente(dados[2])
             self.bt_funcionais['state'] = 'normal'
             self.bt_contato['state'] = 'normal'
             self.bt_endereco['state'] = 'normal'
             self.bt_epi['state'] = 'normal'
             self.bt_info['state'] = 'normal'
             self.bt_talonario['state'] = 'normal'
-        except IndexError:
-            print('')
+        except Exception as e:
+            print(e, x)

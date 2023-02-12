@@ -1,9 +1,7 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-from functions.tk_center import tk_center
-from functions.functions import data_pt, data_us, data_mask
-from functions.globals import cliente_global
+from imports import *
+
+from functions.functions import data_mask, data_pt, data_us
+
 from relatorios.rel_saldo_bh import *
 
 
@@ -133,18 +131,18 @@ class BancoHorasGeral(tk.Toplevel):
             it = self.t_saldo.focus()
             dados = self.t_saldo.item(it)
             dados = dados.get('values')
-            cliente_global.set_cliente(dados[1][:6])
+            CLIENTE.set_cliente(dados[1][:6])
             self.atualiza_t_ext()
-            self.lb_selecionado['text'] = cliente_global.nome
+            self.lb_selecionado['text'] = CLIENTE.nome
             self.bt_salva['state'] = 'normal'
             self.lb_msg['text'] = ''
-        except IndexError:
-            print('')
+        except Exception as e:
+            print(e, x)
 
     def atualiza_t_ext(self):
         for ex in self.t_ext.get_children():
             self.t_ext.delete(ex)
-        extrato_individual = extrato_horas(cliente_global.re)
+        extrato_individual = extrato_horas(CLIENTE.re)
         for i in extrato_individual:
             dados = [data_pt(i['data']), i['hora'], i['motivo']]
             if dados[1] < 0:
@@ -154,7 +152,7 @@ class BancoHorasGeral(tk.Toplevel):
 
     def salva_horas(self):
         dados = BancoHoras()
-        dados.cria_banco(cliente_global.re, data_us(self.data.entry.get()), self.hora.get(), self.motivo.get().upper())
+        dados.cria_banco(CLIENTE.re, data_us(self.data.entry.get()), self.hora.get(), self.motivo.get().upper())
         if dados.hora == '' or dados.motivo == '':
             self.lb_msg['text'] = "Dados não podem ficar em branco (vazios)"
         else:

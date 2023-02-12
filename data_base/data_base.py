@@ -218,5 +218,11 @@ class Con:
                                "ef VARCHAR(15));"
             c.execute(tabela_talonario)
 
+            tabela_users = "CREATE TABLE IF NOT EXISTS users " \
+                           "(id_user INT AUTO_INCREMENT PRIMARY KEY, " \
+                           "user VARCHAR(20), " \
+                           "password VARCHAR(255));"
+            c.execute(tabela_users)
+
 
 Con().create_database()

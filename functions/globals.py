@@ -2,9 +2,9 @@ from classes.cl_cliente import Cliente
 from classes_transito.tr_ait import Ait
 
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE CLIENTE
-cliente_global = Cliente()
+CLIENTE = Cliente()
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE AIT
-ait_global = Ait()
+AIT = Ait()
 
 ################################################################################################################
 # TRATAMENTO DE GRADUAÇÕES PARA LISTA POR ANTIGUIDADE

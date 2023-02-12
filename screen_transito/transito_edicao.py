@@ -1,15 +1,10 @@
-import tkinter as tk
-import ttkbootstrap as ttk
-from ttkbootstrap import DateEntry
-
-from functions.tk_center import tk_center
-from functions.functions import data_mask, hora_mask, is_number, data_us, data_pt
-
+from imports import *
+from functions.functions import data_mask, hora_mask, data_us, is_number, data_pt
 from classes_transito.tr_ait import *
+from classes_transito.tr_talao import *
 from classes_transito.tr_logradouros import *
 from classes_transito.tr_infra import *
-from classes_transito.tr_talao import *
-from functions.globals import ait_global
+
 
 class TransitoEdicao(tk.Toplevel):
     def __init__(self):
@@ -172,7 +167,7 @@ class TransitoEdicao(tk.Toplevel):
     ##############################################################################################################
     def salvar(self):
         if self.coleta_formulario():
-            if ait_global.update_ait():
+            if AIT.update_ait():
                 self.lb_msg['text'] = f"{self.ait.get()} Salvo!!!"
                 self.lb_msg['foreground'] = "black"
                 self.lb_msg['font'] = ('', 10, 'bold')
@@ -183,26 +178,26 @@ class TransitoEdicao(tk.Toplevel):
             novo_logradouro(self.local.get().upper())
 
     def coleta_formulario(self):
-        ait_global.numero = self.ait.get()
-        ait_global.placa = self.placa.get().upper()
-        ait_global.condutor = self.condutor.get().upper()
-        ait_global.local = self.local.get().upper()
-        ait_global.dia = data_us(self.data.entry.get())
-        ait_global.hora = self.hora.get()
-        ait_global.re = self.re.get()
-        ait_global.codigo = self.codigo.get()
-        ait_global.competencia = self.competencia['text']
-        ait_global.artigo = self.artigo['text']
-        ait_global.crr = self.crr.get().upper()
-        ait_global.remocao = self.recolha.get().upper()
-        ait_global.cnh = self.cnh.get().upper()
-        ait_global.alcoolemia = self.alcoolemia.get().upper()
-        ait_global.obs = self.obs.get().upper()
-        ait_global.talao = self.talao_select.get()
+        AIT.numero = self.ait.get()
+        AIT.placa = self.placa.get().upper()
+        AIT.condutor = self.condutor.get().upper()
+        AIT.local = self.local.get().upper()
+        AIT.dia = data_us(self.data.entry.get())
+        AIT.hora = self.hora.get()
+        AIT.re = self.re.get()
+        AIT.codigo = self.codigo.get()
+        AIT.competencia = self.competencia['text']
+        AIT.artigo = self.artigo['text']
+        AIT.crr = self.crr.get().upper()
+        AIT.remocao = self.recolha.get().upper()
+        AIT.cnh = self.cnh.get().upper()
+        AIT.alcoolemia = self.alcoolemia.get().upper()
+        AIT.obs = self.obs.get().upper()
+        AIT.talao = self.talao_select.get()
 
-        if ait_global.numero == "" or ait_global.placa == "" or ait_global.local == "" or\
-           ait_global.dia == "" or ait_global.hora == "" or ait_global.re == "" or\
-           ait_global.codigo == "" or ait_global.competencia == "":
+        if AIT.numero == "" or AIT.placa == "" or AIT.local == "" or\
+           AIT.dia == "" or AIT.hora == "" or AIT.re == "" or\
+           AIT.codigo == "" or AIT.competencia == "":
             return False
         else:
             return True
@@ -249,7 +244,7 @@ class TransitoEdicao(tk.Toplevel):
                 self.artigo['font'] = ('', 10, 'bold')
                 self.competencia['background'] = '#696969'
                 self.artigo['background'] = '#696969'
-                ait_global.valor = "{:.2f}".format(cod.valor * cod.fator)
+                AIT.valor = "{:.2f}".format(cod.valor * cod.fator)
             else:
                 self.competencia['text'] = ' Cód. Inválido'
                 self.artigo['text'] = ' Cód. Inválido'
@@ -264,20 +259,20 @@ class TransitoEdicao(tk.Toplevel):
             self.local.select_range(len_f, len(logr))
 
     def preenche_form(self):
-        self.talao_select.set(ait_global.talao)
-        self.ait.insert(0, ait_global.numero)
-        self.placa.insert(0, ait_global.placa)
-        self.condutor.insert(0, ait_global.condutor)
-        self.local.insert(0, ait_global.local)
+        self.talao_select.set(AIT.talao)
+        self.ait.insert(0, AIT.numero)
+        self.placa.insert(0, AIT.placa)
+        self.condutor.insert(0, AIT.condutor)
+        self.local.insert(0, AIT.local)
         self.data.entry.delete(0, 'end')
-        self.data.entry.insert(0, data_pt(ait_global.dia))
-        self.hora.insert(0, ait_global.hora)
-        self.re.insert(0, ait_global.re)
-        self.codigo.insert(0, ait_global.codigo)
-        self.competencia['text'] = ait_global.competencia
-        self.artigo['text'] = ait_global.artigo
-        self.crr.insert(0, ait_global.crr)
-        self.recolha.set(ait_global.remocao)
-        self.cnh.insert(0, ait_global.cnh)
-        self.alcoolemia.insert(0, ait_global.alcoolemia)
-        self.obs.insert(0, ait_global.obs)
+        self.data.entry.insert(0, data_pt(AIT.dia))
+        self.hora.insert(0, AIT.hora)
+        self.re.insert(0, AIT.re)
+        self.codigo.insert(0, AIT.codigo)
+        self.competencia['text'] = AIT.competencia
+        self.artigo['text'] = AIT.artigo
+        self.crr.insert(0, AIT.crr)
+        self.recolha.set(AIT.remocao)
+        self.cnh.insert(0, AIT.cnh)
+        self.alcoolemia.insert(0, AIT.alcoolemia)
+        self.obs.insert(0, AIT.obs)
