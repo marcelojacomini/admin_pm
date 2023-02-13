@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Logradouros:
@@ -7,7 +7,7 @@ class Logradouros:
         self.logradouro = None
 
     def insert_logradouro(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             try:
                 c.execute(f"SELECT logradouro FROM tr_logradouros WHERE "
@@ -23,7 +23,7 @@ class Logradouros:
 
 
 def lista_logradouros():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT logradouro FROM tr_logradouros ORDER BY logradouro")
         logr = c.fetchall()
@@ -34,7 +34,7 @@ def lista_logradouros():
 
 
 def retorna_logradouro(parametro):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         try:
             c.execute(f"SELECT logradouro FROM tr_logradouros WHERE "

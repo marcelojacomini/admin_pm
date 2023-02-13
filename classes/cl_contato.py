@@ -1,5 +1,5 @@
 from classes.cl_cliente import *
-from data_base.data_base import Con
+from data_base.data_base import con
 import pandas as pd
 
 
@@ -11,7 +11,7 @@ class Contato(Cliente):
         self.contato = None
 
     def insert_contato(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO cl_contatos (re, tipo, contato) "
                       f"VALUES ('{self.re}', '{self.tipo}', '{self.contato}')")
@@ -19,7 +19,7 @@ class Contato(Cliente):
 
 
 def delete_contato(contato):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         try:
             c.execute(f"DELETE FROM cl_contatos WHERE contato = '{contato}'")
@@ -29,21 +29,21 @@ def delete_contato(contato):
 
 
 def lista_contatos(re):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM cl_contatos WHERE re = '{re}' ORDER BY tipo")
         return c.fetchall()
 
 
 def retorna_contatos():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM cl_contatos ORDER BY tipo, contato DESC")
         return c.fetchall()
 
 
 def get_email_funcional(re):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT contato FROM cl_contatos WHERE re = '{re}' AND tipo = '2-e-mail funcional'")
         return c.fetchone()

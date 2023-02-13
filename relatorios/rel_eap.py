@@ -5,7 +5,7 @@ from functions.functions import data_pt
 
 
 def lista_eap():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute("SELECT * FROM cl_eap")
         return c.fetchall()

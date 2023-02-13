@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Epi:
@@ -14,7 +14,7 @@ class Epi:
         self.validade_espargidor = None
 
     def set_epi(self, re):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM cl_epi  WHERE re = '{re}'")
             dados = c.fetchone()
@@ -32,7 +32,7 @@ class Epi:
                 return False
 
     def insert_epi(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO cl_epi "
                       f"(re, arma, colete, validade_colete, algemas, tonfa, espargidor, validade_espargidor) "
@@ -49,7 +49,7 @@ class Epi:
             cnx.commit()
 
     def update_epi(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"UPDATE cl_epi SET "
                       f"arma = '{self.arma}', "

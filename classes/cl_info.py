@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Info:
@@ -9,7 +9,7 @@ class Info:
         self.descricao = None
 
     def set_info(self, info):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM cl_info  WHERE (id_info = {info}) OR re = '{info}'")
             dados = c.fetchone()
@@ -23,7 +23,7 @@ class Info:
                 return False
 
     def insert_info(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO cl_info "
                       f"(re, data_info, descricao) "
@@ -35,21 +35,21 @@ class Info:
             cnx.commit()
 
     def delete_info(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"DELETE FROM cl_info WHERE id_info = {self.id_info}")
             cnx.commit()
 
 
 def lista_info(re):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM cl_info WHERE re = '{re}' ORDER BY data_info DESC")
         return c.fetchall()
 
 
 def pesquisa_info_texto(re, texto):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM cl_info WHERE (re = '{re}') "
                   f"AND (descricao LIKE '{texto}%') ORDER BY data_info DESC")

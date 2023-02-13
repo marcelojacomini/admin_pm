@@ -1,5 +1,5 @@
 from classes.cl_cliente import *
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class DadosPessoais(Cliente):
@@ -23,7 +23,7 @@ class DadosPessoais(Cliente):
         self.cidade = None
 
     def set_dados_pessoais(self, re):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM cl_dados_pessoais  WHERE re = '{re}'")
             dados = c.fetchone()
@@ -49,7 +49,7 @@ class DadosPessoais(Cliente):
                 return False
 
     def insert_dados_pessoais(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO cl_dados_pessoais "
                       f"(re, cpf, rg, nascimento, cnh, validade, categoria, sat, "
@@ -74,7 +74,7 @@ class DadosPessoais(Cliente):
             cnx.commit()
 
     def update_dados_pessoais(self):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"UPDATE cl_dados_pessoais SET "
                       f"cpf = '{self.cpf}', "
@@ -97,7 +97,7 @@ class DadosPessoais(Cliente):
 
 
 def lista_dados_pessoais():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute("SELECT re, cnh, validade, categoria, sat FROM cl_dados_pessoais")
         return c.fetchall()

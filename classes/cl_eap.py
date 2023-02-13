@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Eap:
@@ -10,7 +10,7 @@ class Eap:
         self.send_mail = None
 
     def set_eap(self, texto):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM cl_eap  WHERE (id_eap = {texto}) OR re = '{texto}'")
             dados = c.fetchone()
@@ -29,7 +29,7 @@ def insert_eap(re, periodo, data, send_mail):
     eap = Eap()
     eap = eap.set_eap(re)
     if not eap:
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO cl_eap "
                       f"(re, periodo_ead, data_eap, send_mail) "
@@ -41,7 +41,7 @@ def insert_eap(re, periodo, data, send_mail):
                       f"'{send_mail}')")
             cnx.commit()
     else:
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"UPDATE cl_eap SET "
                       f"periodo_ead = '{periodo}', "
@@ -51,7 +51,7 @@ def insert_eap(re, periodo, data, send_mail):
 
 
 def edita_aviso_eap(re, aviso):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"UPDATE cl_eap SET "
                   f"send_mail = '{aviso}'"

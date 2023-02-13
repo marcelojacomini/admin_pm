@@ -25,7 +25,7 @@ class Ait:
         self.valor = None
 
     def set_ait(self, parametro):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM tr_ait WHERE "
                       f"(numero = '{parametro}')")
@@ -54,7 +54,7 @@ class Ait:
                 return False
 
     def update_ait(self):
-        cnx = Con().con()
+        cnx = con()
         try:
             with cnx.cursor() as c:
                 c.execute(
@@ -84,7 +84,7 @@ class Ait:
 
 
 def insert_ait(a):
-    cnx = Con().con()
+    cnx = con()
     try:
         with cnx.cursor() as c:
             c.execute(f"INSERT INTO tr_ait (numero, placa, condutor, local, dia, hora, re, codigo, competencia, "
@@ -121,14 +121,14 @@ def lista_ait_padrao():
     ano = hoje.year
     de = f"{ano}-{mes}-01"
     ate = f"{ano}-{mes}-{dia}"
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM tr_ait WHERE (dia >= '{de}') AND (dia <= '{ate}') ORDER BY dia DESC")
         return c.fetchall()
 
 
 def lista_ait_fitros(seletor, dia_de, dia_ate):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         if seletor == "Todos":
             c.execute(f"SELECT * FROM tr_ait WHERE (dia >= '{dia_de}') AND (dia <= '{dia_ate}') ORDER BY dia DESC")
@@ -143,7 +143,7 @@ def lista_ait_fitros(seletor, dia_de, dia_ate):
 
 
 def lista_ait_texto(texto):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM tr_ait WHERE "
                   f"(numero LIKE '{texto}%') OR "
@@ -161,7 +161,7 @@ def lista_ait_resumo_fitros(dia_de, dia_ate):
     # RESUMO GERAL
     #######################################################################################
     resumo = []
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         # RESUMO DE AMBAS AS COMPETÊNCIAS
         c.execute(f"SELECT * FROM tr_ait WHERE "
@@ -206,7 +206,7 @@ def lista_ait_resumo_individual(dia_de, dia_ate):
     resumo = []
     clientes = lista_clientes()
 
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         # RESUMO DE AMBAS AS COMPETÊNCIAS
         c.execute(f"SELECT * FROM tr_ait WHERE "

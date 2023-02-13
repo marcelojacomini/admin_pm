@@ -1,4 +1,5 @@
-from data_base.data_base import Con
+from data_base.data_base import con
+from screen_config.cf_first_config import FirstConfig
 
 
 class Users:
@@ -14,13 +15,17 @@ class Users:
         pass
 
     def set_user(self):
-        cnx = Con().con()
-        with cnx.cursor() as c:
-            c.execute(f"SELECT * FROM users WHERE (user = '{self.user}') AND (password = '{self.password}')")
-            if c.fetchone():
-                return self
-            else:
-                return self
+        try:
+            cnx = con()
+            with cnx.cursor() as c:
+                c.execute(f"SELECT * FROM users WHERE (user = '{self.user}') AND (password = '{self.password}')")
+                if c.fetchone():
+                    return self
+                else:
+                    return False
+        except Exception as e:
+            print(e)
+            FirstConfig()
 
 
 user_session = Users()

@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
@@ -10,7 +10,7 @@ class Mails:
         self.msg_from = None
         self.mail_smtp = None
 
-        cnx = Con().con()
+        cnx = con()
 
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM fn_mail")
@@ -48,7 +48,7 @@ class Mails:
 
 
 def insert_mail(password, msg_from, mail_smtp):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute("SELECT * FROM fn_mail")
         if c.fetchone():

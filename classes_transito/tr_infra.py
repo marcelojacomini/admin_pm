@@ -1,5 +1,5 @@
 # CLASSE INFRAÇÕES DE TRÂNSITO (DESCRIÇÃO ARTIGO VALOR COMPENTENCIA)
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Infra:
@@ -13,7 +13,7 @@ class Infra:
         self.fator = None
 
     def set_infra(self, parametro):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM tr_infra WHERE "
                       f"(id_infra = {parametro}) OR "

@@ -11,7 +11,7 @@ class Talao:
         self.ef = None
 
     def set_talonario(self, re):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM tr_talao WHERE "
                       f"re = '{re}'")
@@ -37,7 +37,7 @@ class Talao:
         existe = Talao().set_talonario(self.re)
         try:
             if existe.id_talao:
-                cnx = Con().con()
+                cnx = con()
                 with cnx.cursor() as c:
                     c.execute(f"UPDATE tr_talao SET "
                               f"mi = '{self.mi}', "
@@ -46,7 +46,7 @@ class Talao:
                               f"ef = '{self.ef}' WHERE re = '{self.re}'")
                     cnx.commit()
             else:
-                cnx = Con().con()
+                cnx = con()
                 with cnx.cursor() as c:
                     c.execute(f"INSERT INTO tr_talao (re, mi, mf, ei, ef) VALUES "
                               f"('{self.re}', '{self.mi}', '{self.mf}', '{self.ei}', '{self.ef}')")
@@ -58,7 +58,7 @@ class Talao:
 
 
 def talao_range(re):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM tr_talao WHERE "
                   f"re = '{re}'")
@@ -72,7 +72,7 @@ def talao_range(re):
 
 
 def lista_talonario_geral():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute("SELECT re FROM clientes WHERE ativo = 'ATIVO' ORDER BY graduacao, promocao, admissao, re")
         clientes = c.fetchall()

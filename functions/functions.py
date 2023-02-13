@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime
 
 
@@ -7,6 +8,15 @@ def tk_center(master, largura, altura):
     px = int(w/2 - largura/2)
     py = int(h/2 - altura/2)
     return f'{largura}x{altura}+{px}+{py}'
+
+
+def pass_converter(password):
+    # encode the password string to bytes
+    password_bytes = password.encode('utf-8')
+    # create the hash object
+    m = hashlib.md5(password_bytes)
+    # return the converted password
+    return m.hexdigest()
 
 
 ###########################################################################################

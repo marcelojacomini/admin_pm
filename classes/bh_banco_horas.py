@@ -8,7 +8,7 @@ class SaldoHoras:
         self.saldo = None
 
     def set_cliente_saldo(self, re):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM bh_saldo WHERE re = '{re}'")
             cliente = c.fetchone()
@@ -26,7 +26,7 @@ class SaldoHoras:
 
     def altera_saldo(self):
         try:
-            cnx = Con().con()
+            cnx = con()
             with cnx.cursor() as c:
                 c.execute(f"UPDATE bh_saldo SET saldo = {self.saldo} WHERE re = '{self.re}'")
                 cnx.commit()
@@ -53,7 +53,7 @@ class BancoHoras:
 
     def insert_banco(self):
         try:
-            cnx = Con().con()
+            cnx = con()
             with cnx.cursor() as c:
                 c.execute(f"INSERT INTO bh_banco (re, data, hora, motivo) "
                           f"VALUES ('{self.re}', '{self.data}', {self.hora}, '{self.motivo}')")
@@ -66,7 +66,7 @@ class BancoHoras:
 
 
 def extrato_horas(re):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM bh_banco WHERE re = '{re}' ORDER BY data DESC")
         return c.fetchall()

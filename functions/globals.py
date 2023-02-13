@@ -1,6 +1,9 @@
 from classes.cl_cliente import Cliente
 from classes_transito.tr_ait import Ait
+from screen_config.class_users import *
 
+# VARIÁVEL GLOBAL SESSION
+SESSION_USER = Users()
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE CLIENTE
 CLIENTE = Cliente()
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE AIT

@@ -1,4 +1,4 @@
-from data_base.data_base import Con
+from data_base.data_base import con
 
 
 class Cliente:
@@ -15,7 +15,7 @@ class Cliente:
         self.ativo = None
 
     def set_cliente(self, txt):
-        cnx = Con().con()
+        cnx = con()
         with cnx.cursor() as c:
             c.execute(f"SELECT * FROM clientes WHERE "
                       f"re = '{txt}' OR "
@@ -45,7 +45,7 @@ class Cliente:
 
 
 def insert_cliente(re, dc, nome, tarja, graduacao, graduacao_txt, admissao, promocao):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         try:
             c.execute(f"INSERT INTO clientes "
@@ -61,7 +61,7 @@ def insert_cliente(re, dc, nome, tarja, graduacao, graduacao_txt, admissao, prom
 
 
 def edita_cliente(cliente_id, re, dc, nome, tarja, graduacao, graduacao_txt, admissao, promocao, ativo):
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
 
         c.execute(f"UPDATE clientes SET "
@@ -83,7 +83,7 @@ def verifica_re(campo, re):
 
 # FUNÇÃO PARA RETORNAR LISTA PADRAO POR ANTIGUIDADE
 def lista_clientes():
-    cnx = Con().con()
+    cnx = con()
     with cnx.cursor() as c:
         c.execute(f"SELECT * FROM clientes WHERE ativo = 'ATIVO' ORDER BY graduacao, promocao, admissao, re")
         cliente = c.fetchall()
