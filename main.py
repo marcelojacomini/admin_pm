@@ -114,6 +114,8 @@ class App(tk.Tk):
         bt_config = ttk.Button(self.frame_config, text='CONFIGURAÇÕES', style='dark', command=Configuracoes)
         bt_config.pack(fill='x', pady=5, padx=2)
 
+        self.user.focus()
+
     def logar(self):
         SESSION_USER.user = self.user.get()
         SESSION_USER.password = pass_converter(self.senha.get())

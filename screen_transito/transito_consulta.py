@@ -79,7 +79,7 @@ class TransitoConsulta(tk.Toplevel):
         #############################################################################################################
         linha3 = ttk.Frame(self)
         linha3.pack(fill='x', pady=10)
-        lb_texto = ttk.Label(linha3, text="Pesquisa por texto:", font=('', 11, 'bold'), foreground='Blue')
+        lb_texto = ttk.Label(linha3, text="Pesquisa por texto:", font=('', 11, 'bold'), foreground='yellow')
         lb_texto.grid(row=0, column=0, padx=15, sticky='w')
         self.texto = ttk.Entry(linha3, width=50)
         self.texto.grid(row=1, column=0, padx=15, pady=3, sticky='w')

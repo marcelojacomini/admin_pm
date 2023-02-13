@@ -173,7 +173,7 @@ class TransitoCadastro(tk.Toplevel):
         dados_form = self.coleta_formulario()
         if insert_ait(dados_form):
             self.lb_msg['text'] = f"{self.ait.get()} Salvo!!!"
-            self.lb_msg['foreground'] = "black"
+            self.lb_msg['foreground'] = "yellow"
             self.lb_msg['font'] = ('', 10, 'bold')
         else:
             self.lb_msg['text'] = "Houve um erro ao salvar"
