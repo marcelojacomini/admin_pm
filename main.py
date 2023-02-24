@@ -116,6 +116,10 @@ class App(tk.Tk):
 
         self.user.focus()
 
+        self.bind('<Return>', self.enter_press)
+
+        self.x_login = 0
+
     def logar(self):
         SESSION_USER.user = self.user.get()
         SESSION_USER.password = pass_converter(self.senha.get())
@@ -125,7 +129,14 @@ class App(tk.Tk):
             self.tela_login.destroy()
             self.tela_inicial.pack(fill='both', expand=True, pady=60)
         else:
-            self.lb_msg['text'] = 'Usuário ou senha inválidos!!!'
+            self.x_login = self.x_login + 1
+            self.lb_msg['text'] = f'Usuário ou senha inválidos!!! - ({self.x_login})'
+
+    def enter_press(self, event):
+        try:
+            self.logar()
+        except Exception as e:
+            print(event, e)
 
 
 ##############################################

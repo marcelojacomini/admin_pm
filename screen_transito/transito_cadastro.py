@@ -140,7 +140,7 @@ class TransitoCadastro(tk.Toplevel):
         ##############################################################################################################
         linha7 = ttk.Frame(self)
         linha7.pack(fill='x', padx=20)
-        bt_salvar = ttk.Button(linha7, text="SALVAR", width=40, style='success', command=self.salvar)
+        bt_salvar = ttk.Button(linha7, text="SALVAR (F12)", width=40, style='success', command=self.salvar)
         bt_salvar.grid(row=0, column=0)
 
         self.repete = ttk.Checkbutton(linha7, text="Marque para repetir o veículo!", style="success-round-toggle",
@@ -165,6 +165,8 @@ class TransitoCadastro(tk.Toplevel):
         self.data.entry.bind('<KeyRelease>', lambda event: data_mask(self.data, self.data.entry.get()))
         self.hora.bind('<KeyRelease>', lambda event: hora_mask(self.hora, self.hora.get()))
         self.codigo.bind('<KeyRelease>', lambda event: self.verifica_enquadramento(self.codigo, self.codigo.get()))
+        # SALVAR AO TECLAR F12
+        self.bind('<KeyPress>', self.f_12)
 
     ##############################################################################################################
     # FUNÇÕES DA PÁGINA
@@ -299,3 +301,7 @@ class TransitoCadastro(tk.Toplevel):
         self.alcoolemia.delete(0, 'end')
         self.obs.delete(0, 'end')
         self.ait.focus()
+
+    def f_12(self, tecla):
+        if tecla.keysym == 'F12':
+            self.salvar()
