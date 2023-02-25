@@ -7,6 +7,7 @@ class Users:
         self.id_user = None
         self.user = None
         self.password = None
+        self.email = None
 
     def create_user(self):
         pass
@@ -26,6 +27,3 @@ class Users:
         except Exception as e:
             print(e)
             FirstConfig()
-
-
-user_session = Users()

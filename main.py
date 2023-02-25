@@ -111,7 +111,7 @@ class App(tk.Tk):
 
         self.frame_config = ttk.Frame(self.tela_inicial, borderwidth=2, relief='solid')
 
-        bt_config = ttk.Button(self.frame_config, text='CONFIGURAÇÕES', style='dark', command=Configuracoes)
+        bt_config = ttk.Button(self.frame_config, text='CONFIGURAÇÕES', style='danger', command=Configuracoes)
         bt_config.pack(fill='x', pady=5, padx=2)
 
         self.user.focus()
@@ -121,7 +121,7 @@ class App(tk.Tk):
         self.x_login = 0
 
     def logar(self):
-        SESSION_USER.user = self.user.get()
+        SESSION_USER.user = self.user.get().lower()
         SESSION_USER.password = pass_converter(self.senha.get())
         if SESSION_USER.set_user():
             if SESSION_USER.user == 'admin':

@@ -1,4 +1,5 @@
 from data_base.data_base import con
+from classes.cl_contato import get_email_funcional
 
 
 class Cliente:
@@ -88,3 +89,16 @@ def lista_clientes():
         c.execute(f"SELECT * FROM clientes WHERE ativo = 'ATIVO' ORDER BY graduacao, promocao, admissao, re")
         cliente = c.fetchall()
         return cliente
+
+
+def lista_tarjas():
+    cnx = con()
+    with cnx.cursor() as c:
+        c.execute(f"SELECT tarja FROM clientes WHERE ativo = 'ATIVO' ORDER BY graduacao, promocao, admissao, re")
+        cliente = c.fetchall()
+        lista = []
+        for i in cliente:
+            lista.append(i['tarja'])
+        return lista
+
+

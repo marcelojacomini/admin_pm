@@ -3,7 +3,7 @@ from data_base.data_base import con
 import pandas as pd
 
 
-class Contato(Cliente):
+class Contato:
     def __init__(self):
         super(Contato, self).__init__()
         self.id_contato = None

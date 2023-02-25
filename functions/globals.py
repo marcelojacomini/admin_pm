@@ -1,4 +1,5 @@
 from classes.cl_cliente import Cliente
+from classes.cl_contato import Contato
 from classes_transito.tr_ait import Ait
 from screen_config.class_users import *
 
@@ -6,6 +7,7 @@ from screen_config.class_users import *
 SESSION_USER = Users()
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE CLIENTE
 CLIENTE = Cliente()
+CONTATO = Contato()
 # VARIÁVEL GLOBAL CRIADA PARA RECEBER INFORMAÇÕES TRANSITÓRIAS DE AIT
 AIT = Ait()
 
